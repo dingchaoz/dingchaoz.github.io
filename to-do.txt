@@ -1,0 +1,5 @@
+- Fix the venture captial CA,NY data showing NaN error
+More optional features
+  - Add a year slider to venture capital to show yearly change
+  - Add a area or line chart to show annual vc spend trend
+  - Add a treemap or bar chart to show avg venture capital per deal

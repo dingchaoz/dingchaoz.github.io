@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://d3js.org/topojson.v1.min.js"></script>
+<link href="/d3-geomap/css/d3.geomap.css" rel="stylesheet">
+<script src="/d3-geomap/vendor/d3.geomap.dependencies.min.js"></script>
+<script src="/d3-geomap/js/d3.geomap.min.js"></script>
+
+  <style type="text/css">
+    body {
+      width: 800px;
+      margin: 25px auto;
+      font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    }
+    rect {
+        fill-opacity: 0.8;
+    }
+    rect:hover {
+        fill-opacity: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Venture Capital total spend 2012</h1>
+
+  <div id="map"></div>
+
+  <script type="text/javascript">
+
+  var map = d3.geomap.choropleth()
+    .geofile('countries/USA.json')
+    .projection(d3.geo.albersUsa)
+    .column('2012')
+    .unitId('fips')
+    .scale(1000)
+    .legend(true);
+
+d3.csv('/data/vcspend.csv', function(error, data) {
+    d3.select('#map')
+        .datum(data)
+        .call(map.draw, map);
+});
+
+  </script>
+</body>
+</html>
