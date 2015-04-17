@@ -6,3 +6,8 @@ More optional features
   - Add a area or line chart to show annual vc spend trend the whole country
     and then by state when selected by user
   - Add a treemap or bar chart to show avg venture capital per deal
+  - Add a linked vis between age and gender distribution, e.g. brush a certain age
+    range, will update the gender distribution of that age range
+
+A web to find small size csv about demographics
+http://kff.org/state-category/demographics-and-the-economy/population/
