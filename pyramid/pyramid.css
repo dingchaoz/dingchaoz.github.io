@@ -4,11 +4,11 @@
   font-family: Arial, sans-serif;
 }
 .femalebar, .malebar {
-  fill: red;
+  fill: #FF99CC;
 }
 
 .malebar {
-  fill: blue;
+  fill: #99CCFF;
 }
 
 .highlight rect.malebar, .highlight rect.femalebar {

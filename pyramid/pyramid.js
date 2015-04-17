@@ -1,28 +1,11 @@
+function build(allData) {
+	var data = allData;
+
+
+
+
 /* To do need to edit/input data */
-var data = [
-  {"sharedLabel": "Category 1", "barData1": 43041, "barData2": 40852},
-  {"sharedLabel": "Category 2", "barData1": 38867, "barData2": 36296},
-  {"sharedLabel": "Category 3", "barData1": 41748, "barData2": 40757},
-  {"sharedLabel": "Category 4", "barData1": 24831, "barData2": 23624},
-  {"sharedLabel": "Category 5", "barData1": 15764, "barData2": 15299},
-  {"sharedLabel": "Category 6", "barData1": 17006, "barData2": 16071},
-  {"sharedLabel": "Category 7", "barData1": 24309, "barData2": 23235},
-  {"sharedLabel": "Category 8", "barData1": 46756, "barData2": 46065},
-  {"sharedLabel": "Category 9", "barData1": 41923, "barData2": 41704},
-  {"sharedLabel": "Category 10", "barData1": 42565, "barData2": 42159},
-  {"sharedLabel": "Category 11", "barData1": 44316, "barData2": 45468},
-  {"sharedLabel": "Category 12", "barData1": 42975, "barData2": 44223},
-  {"sharedLabel": "Category 13", "barData1": 36755, "barData2": 39452},
-  {"sharedLabel": "Category 14", "barData1": 31578, "barData2": 34063},
-  {"sharedLabel": "Category 15", "barData1": 10328, "barData2": 11799},
-  {"sharedLabel": "Category 16", "barData1": 13917, "barData2": 14949},
-  {"sharedLabel": "Category 17", "barData1": 7920, "barData2": 8589},
-  {"sharedLabel": "Category 18", "barData1": 9003, "barData2": 10397},
-  {"sharedLabel": "Category 19", "barData1": 14322, "barData2": 16832},
-  {"sharedLabel": "Category 20", "barData1": 12369, "barData2": 15836},
-  {"sharedLabel": "Category 21", "barData1": 8710, "barData2": 12377},
-  {"sharedLabel": "Category 22", "barData1": 5853, "barData2": 12213}
-];
+
 
 /* edit these settings freely */  
 var w = 600,
@@ -31,7 +14,7 @@ var w = 600,
     labelSpace = 40,
     innerMargin = w/2+labelSpace,
     outerMargin = 15,
-    gap = 2,
+    gap = 2,		
     dataRange = d3.max(data.map(function(d) { return Math.max(d.barData1, d.barData2) }));
     leftLabel = "Female",
     rightLabel = "Male";
@@ -147,4 +130,5 @@ function refresh(data) {
       .text(function(d) { return commas(d.barData2); })
     .transition()
       .attr("x", function(d) { return innerMargin - total(d.barData2) - 2 * labelSpace; });
+}
 }
