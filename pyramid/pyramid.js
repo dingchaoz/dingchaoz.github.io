@@ -8,8 +8,8 @@ function build(allData) {
 
 
 /* edit these settings freely */  
-var w = 600,
-    h = 400,
+var w = 700,
+    h = 500,
     topMargin = 15,
     labelSpace = 40,
     innerMargin = w/2+labelSpace,
@@ -97,6 +97,11 @@ bar.append("text")
 bar.append("text")
     .attr("class", "shared")
     .attr("x", w/2)
+	.attr("y", -h/100)
+	.style("fill", "#004669")
+	.style("text-anchor", "middle")
+	.attr("font-family", "sans-serif")
+	.attr("font-size", "5px")
     .attr("dy", "1em")
     .attr("text-anchor", "middle")
     .text(function(d) { return d.sharedLabel; });
