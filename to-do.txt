@@ -14,3 +14,10 @@ http://kff.org/state-category/demographics-and-the-economy/population/
 
 US Census map
 http://tigerweb.geo.census.gov/datamapper/map.html
+
+Note:
+the coordinated view can't show the 2nd layer of treemap, and it seems becuase the
+treempap.children is defined by libs\d3.min.js or d3.js, while in the single view
+file treemap.children is defined by d3org.d3.v2.js, there is a conflict using
+the multiple js libraries-- need to fix that-- or use a different coordinated view
+system like http://bl.ocks.org/dukevis/6768900 which does not use the course lib

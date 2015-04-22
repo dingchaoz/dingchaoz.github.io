@@ -1,0 +1,93 @@
+body {
+      width: 800px;
+      margin: 25px auto;
+      font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    }
+    
+rect {
+        fill-opacity: 0.8;
+    }
+    
+rect:hover {
+        fill-opacity: 1;
+    }
+	
+	
+.shared, .bar, .label {
+  font-size: 8pt;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+}
+.femalebar, .malebar {
+  fill: #FF99CC;
+}
+
+.malebar {
+  fill: #99CCFF;
+}
+
+.highlight rect.malebar, .highlight rect.femalebar {
+  fill: yellow;
+}
+text.malebar, text.femalebar {
+  display: none;
+}
+.highlight text {
+  display: block;
+  fill: #000;
+}
+
+#chart {
+width: 820px;
+height: 700px;
+background: #bbb;
+margin: 1px auto;
+position: relative;
+	  -webkit-box-sizing: border-box;
+	  -moz-box-sizing: border-box;
+	  box-sizing: border-box;
+}
+ 
+text {
+	pointer-events: none;
+}
+ 
+.grandparent text { /* header text */
+	font-weight: bold;
+	font-size: medium;
+	font-family: "Open Sans", Helvetica, Arial, sans-serif; 
+}
+ 
+rect {
+fill: none;
+stroke: #fff;
+}
+ 
+rect.parent,
+	.grandparent rect {
+		stroke-width: 2px;
+	}
+ 
+.grandparent rect {
+fill: #fff;
+}
+ 
+.children rect.parent,
+	.grandparent rect {
+cursor: pointer;
+	}
+ 
+rect.parent {
+	pointer-events: all; 
+}
+ 
+.children:hover rect.child,
+	.grandparent:hover rect {
+fill: #aaa;
+	}
+ 
+.textdiv { /* text in the boxes */
+	font-size: x-small;
+padding: 5px;
+	 font-family: "Open Sans", Helvetica, Arial, sans-serif; 
+}

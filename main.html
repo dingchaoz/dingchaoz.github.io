@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>US Census Visualization</title>
+
+    <!-- ADD Libraries-->
+     <script src="libs/d3/d3.js" charset="utf-8"></script>
+	 <!-- <script src="libs/d3/test.js" charset="utf-8"></script>-->
+
+     <script src="libs/jquery/jquery-2.1.1.min.js" charset="utf-8"></script>
+	<script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+    <script src="libs/bootstrap/js/bootstrap.min.js" charset="utf-8"></script>
+	<script src="http://d3js.org/queue.v1.min.js"></script>
+	<script src="http://d3js.org/topojson.v1.min.js"></script>
+	<!-- <script src="http://d3js.org/d3.v3.min.js"></script>-->
+	<!-- <script src="http://d3js.org/d3.v2.js"></script>-->
+
+   
+    <!--<script src="/d3-geomap/vendor/d3.geomap.dependencies.min.js"></script>
+    <script src="/d3-geomap/js/d3.geomap.min.js"></script>-->
+
+
+    <!--Stylesheets-->
+    <link rel="stylesheet" type="text/css" href="treemap/style.css" />
+    <link href="/d3-geomap/css/d3.geomap.css" rel="stylesheet">
+
+    <!-- Get some nice font-->
+    <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+
+
+    <!--------------------------------->
+    <!-- FROM HERE ON IT IS project stuff-->
+    <!--------------------------------->
+
+    <!-- add own vis classes-->
+    <script src="js/treemap.js"></script>
+	<!--<script src = "js/pyramid.js"></script>
+    <script src = "js/popmap.js"></script>-->
+
+
+    <!-- add own stylesheet-->
+    <link rel="stylesheet" type="text/css" href="css/myStyle.css">
+
+</head>
+<body>
+    <div class="container">
+        <h1>US Census Visualization</h1>
+
+        <div class="row">
+            <div class="col-md-8 col-sm-12">
+               <p> Population Map</p>
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-md-2">
+                <button class="btn btn-sm btn-primary" id="fitInBtn"> <span class="glyphicon glyphicon-resize-horizontal"></span> reset zoom </button>
+            </div>
+
+            <div class="col-md-8">
+                <b>current brush:</b> <span id="brushInfo"></span>
+            </div>
+
+
+
+        </div>
+
+
+
+        <div class="row">
+            <div class="col-md-9" id="popmapVis">
+                <!-- TODO: delete placeholder svg element -->
+                <!-- <svg width="650" height="330" style="background-color: lightblue">
+                    <text x="50" y="50">HERE should be CountVis</text>
+                </svg>-->
+            </div>
+            <div class="col-md-3" id="pyramidVis">
+                <!-- TODO: delete placeholder svg element -->
+                <!-- <svg width="230" height="330" style="background-color: lightcoral">
+                    <text x="50" y="50">HERE should be AgeVis</text>
+                </svg>-->
+            </div>
+        </div>
+
+        <div class="row">
+		<p>current prios in brushing window time range </p>
+            <div class="col-md-12" id="treemapVis">
+                <!-- TODO: delete placeholder svg element -->
+                <!--<svg width="650" height="440" style="background-color: lightgreen">
+                    <text x="50" y="50">HERE should be PrioVis</text>
+                </svg>-->
+            </div>
+
+        </div>
+		
+
+    </div>
+
+
+
+    <script>
+        $(function(){ // this function is called after the HTML document is fully loaded
+
+
+            //==========================================
+            //--- HERE IS WHERE ALL THE MAGIC STARTS --
+            //==========================================
+
+
+            // variables keeping global knowledge of the data
+            var treemapData = [];
+            var popmapData = [];
+			var pyramidData = [];
+			// Creat the root node for the treemap
+			var root = {};
+
+            // call this function after Data is loaded, reformatted and bound to the variables
+            var initVis = function(){
+
+                //TODO: Create an eventHandler  --> DONE :)
+                var MyEventHandler = new Object();
+
+
+                //TODO: Instantiate all Vis Objects here
+                // instantiates all Vis Objects here
+				debugger;
+               var treemap_vis = new TreemapVis(d3.select("#treemapVis"), root, MyEventHandler);
+               //var popmap_vis = new PopmapVis(d3.select("#popmapVis"), popmapData, MyEventHandler);
+               //var pyramid_vis = new PyramidVis(d3.select("#pyramidVis"), pyramidData, MyEventHandler);
+			   
+				// TODO: bind the eventHandler to the Vis Objects
+				//$(MyEventHandler).bind("selectionChanged", function(event, startData, endDate){
+				//$(MyEventHandler).bind("selectionChanged", function(event, startDate,endDate){
+				   // events will be consumed by the PrioVis and AgeVis object (binding should happen here)
+                   //age_vis.onSelectionChange(startDate, endDate);
+				   ////prio_vis.onSelectionChange(startDate, endDate);
+				   //var prio_visavg = new PrioVis_Avg(d3.select("#prioVis_avg"), allData, metaData, MyEventHandler);
+				   //prio_visavg.onSelectionChange(startDate, endDate);
+                 //});
+                // events will be created from the CountVis object (nothing to do here)
+
+            }
+
+            // call this function after both files are loaded -- error should be "null" if no error
+            var dataLoaded = function (error, _treemapData, _popmapData,_pyramidData) {
+
+                if (!error) {
+
+                    // 
+                    // 
+                    /*
+                    * 
+                    *  Wrangle TreeMap Data
+                    *
+                    * */
+
+                     // Add, remove or change the key values to change the hierarchy. 
+                     treemapData = d3.nest()
+       				                     .key(function(d)  { return d.State; })
+       				                     .key(function(d)  { return d.Race; })
+				                         .entries(_treemapData);
+										 
+					
+					
+
+                     // Creat the root node for the treemap
+			         //var root = {};
+			
+			         // Add the data to the tree
+			         root.key = "Data";
+			         root.values = treemapData;
+		
+			         // Change the key names and children values from .next and add values for a chosen column to define the size of the blocks
+			         root = reSortRoot(root,"Population");           
+
+                    // 
+                    // 
+                    /*
+                    * 
+                    *  Wrangle Pyramid Data
+                    *
+                    * */
+					_pyramidData.forEach(function (d) {
+					 
+                                pyramidData.push ({
+                                    sharedLabel: d.Location ,
+                                    barData1: d.Female ,
+									barData2: d.Male
+                                });
+     
+                          })
+
+					// 
+                    // 
+                    /*
+                    * 
+                    *  Wrangle Popmap Data
+                    *
+                    * */
+                     
+					popmapData = _popmapData; 
+					
+					
+					debugger;
+                    initVis();
+					
+					
+                }
+            }
+
+            var startHere = function(){
+			
+			
+			    // Load data asynchronously
+		        queue()
+                  .defer(d3.csv, "data/racetreemap.csv")
+                  .defer(d3.csv, "data/race2013.csv")
+				  .defer(d3.csv,"data/raw_genderbystate2013.csv")
+				  .await(dataLoaded);
+				  
+
+                //TODO: load data here and call "dataLoaded" afterwards
+                // Hint: http://giscollective.org/d3-queue-js/
+				dataLoaded(treemapData, popmapData,pyramidData);
+				//initVis();
+
+            }
+
+            startHere();
+			
+		var reSortRoot = function(root,value_key) {
+		//console.log("Calling");
+		for (var key in root) {
+			if (key == "key") {
+				root.name = root.key;
+				delete root.key;
+			}
+			if (key == "values") {
+				root.children = [];
+				for (item in root.values) {
+					root.children.push(reSortRoot(root.values[item],value_key));
+				}
+				delete root.values;
+			}
+			if (key == value_key) {
+				root.value = parseFloat(root[value_key]);
+				delete root[value_key];
+			}
+		}
+		return root;
+	}	
+			
+			
+        })
+    </script>
+</body>
+</html>
