@@ -35,7 +35,7 @@
 
     <!-- add own vis classes-->
     <script src="js/treemap.js"></script>
-	<!--<script src = "js/pyramid.js"></script>
+	<!--<script src = "js/pyramid.js"></script>-->
     <script src = "js/popmap.js"></script>-->
 
 
@@ -72,9 +72,6 @@
                 <button class="btn btn-sm btn-primary" id="fitInBtn"> <span class="glyphicon glyphicon-resize-horizontal"></span> reset zoom </button>
             </div>
 
-            <div class="col-md-8">
-                <b>current brush:</b> <span id="brushInfo"></span>
-            </div>
 
 
 
@@ -98,7 +95,6 @@
         </div>
 
         <div class="row">
-		<p>current prios in brushing window time range </p>
             <div class="col-md-12" id="treemapVis">
                 <!-- TODO: delete placeholder svg element -->
                 <!--<svg width="650" height="440" style="background-color: lightgreen">
@@ -129,14 +125,6 @@
 			// Creat the root node for the treemap
 			var root = {};
 			
-			// map variable for population map
-			 var map = d3.geomap.choropleth()
-                         .geofile('countries/USA.json')
-                         .projection(d3.geo.albersUsa)
-                         .column('White')
-                         .unitId('fips')
-                         .scale(1000)
-                         .legend(true);
 
             // call this function after Data is loaded, reformatted and bound to the variables
             var initVis = function(){
@@ -149,7 +137,7 @@
                 // instantiates all Vis Objects here
 				debugger;
                var treemap_vis = new TreemapVis(d3.select("#treemapVis"), root, MyEventHandler);
-               //var popmap_vis = new PopmapVis(d3.select("#popmapVis"), popmapData, MyEventHandler);
+               var popmap_vis = new PopmapVis(d3.select("#popmapVis"), popmapData, MyEventHandler);
                //var pyramid_vis = new PyramidVis(d3.select("#pyramidVis"), pyramidData, MyEventHandler);
 			   
 				// TODO: bind the eventHandler to the Vis Objects
@@ -224,10 +212,6 @@
                      
 					popmapData = _popmapData; 
 					
-					// Call to draw population map
-					  d3.select('#popmapVis')
-                        .datum(popmapData)
-                        .call(map.draw, map);
 					
 					
 					debugger;

@@ -1,3 +1,8 @@
+PopmapVis = function(_parentElement, _data,_eventHandler){
+    this.parentElement = _parentElement;
+    this.data = _data;
+	this.eventHandler = _eventHandler;
+
 var map = d3.geomap.choropleth()
     .geofile('countries/USA.json')
     .projection(d3.geo.albersUsa)
@@ -6,8 +11,9 @@ var map = d3.geomap.choropleth()
     .scale(1000)
     .legend(true);
 
-d3.csv('/data/race2013.csv', function(error, data) {
-    d3.select('#map')
-        .datum(data)
+
+    d3.select('#popmapVis')
+        .datum(this.data)
         .call(map.draw, map);
-});
+
+}
