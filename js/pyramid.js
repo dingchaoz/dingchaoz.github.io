@@ -1,5 +1,9 @@
-function build(allData) {
-	var data = allData;
+PyramidVis = function(_parentElement, _data,_eventHandler){
+    this.parentElement = _parentElement;
+    this.data = _data;
+	this.eventHandler = _eventHandler;
+
+	var data = this.data;
 
 
 
@@ -27,7 +31,7 @@ var chartWidth = w - innerMargin - outerMargin,
     commas = d3.format(",.0f");
 
 /* main panel */
-var vis = d3.select("#vis").append("svg")
+var vis = d3.select("#pyramidVis").append("svg")
     .attr("width", w)
     .attr("height", h);
 
