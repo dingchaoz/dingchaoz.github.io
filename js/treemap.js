@@ -88,8 +88,11 @@ function accumulate(d) {
 // coordinates. This lets us use a viewport to zoom.
 function layout(d) {
 	if (d.children) {
+	var bak = d.children.map(function(di) { return di.children});
 		treemap.nodes({children: d.children});
-		d.children.forEach(function(c) {
+		d.children.forEach(function(c,i) {
+		 //restore the 'deleted' children if they were there	
+		  c.children = bak[i];
 			c.x = d.x + c.x * d.dx;
 			c.y = d.y + c.y * d.dy;
 			c.dx *= d.dx;
