@@ -5,7 +5,7 @@
     <title>US Census Visualization</title>
 
     <!-- ADD Libraries-->
-     <script src="libs/d3/d3.min.js" charset="utf-8"></script>
+     <!--<script src="libs/d3/d3.min.js" charset="utf-8"></script>-->
 	 <!-- <script src="libs/d3/test.js" charset="utf-8"></script>-->
 
      <script src="libs/jquery/jquery-2.1.1.min.js" charset="utf-8"></script>
@@ -14,7 +14,7 @@
 	<script src="http://d3js.org/queue.v1.min.js"></script>
 	<script src="http://d3js.org/topojson.v1.min.js"></script>
 	<!-- <script src="http://d3js.org/d3.v3.min.js"></script>-->
-	<!-- <script src="http://d3js.org/d3.v2.js"></script>-->
+	<script src="http://d3js.org/d3.v3.js"></script>
 
    
     <script src="/d3-geomap/vendor/d3.geomap.dependencies.min.js"></script>
@@ -24,6 +24,7 @@
     <!--Stylesheets-->
     <link rel="stylesheet" type="text/css" href="treemap/style.css" />
     <link href="/d3-geomap/css/d3.geomap.css" rel="stylesheet">
+	<link rel="stylesheet" href="pyramid/pyramid.css">
 
     <!-- Get some nice font-->
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -35,8 +36,8 @@
 
     <!-- add own vis classes-->
     <script src="js/treemap.js"></script>
-	<!--<script src = "js/pyramid.js"></script>
-    <script src = "js/popmap.js"></script>-->
+	<script src = "js/pyramid.js"></script>
+    <script src = "js/popmap.js"></script>
 
 
     <!-- add own stylesheet-->
@@ -72,9 +73,6 @@
                 <button class="btn btn-sm btn-primary" id="fitInBtn"> <span class="glyphicon glyphicon-resize-horizontal"></span> reset zoom </button>
             </div>
 
-            <div class="col-md-8">
-                <b>current brush:</b> <span id="brushInfo"></span>
-            </div>
 
 
 
@@ -98,7 +96,6 @@
         </div>
 
         <div class="row">
-		<p>current prios in brushing window time range </p>
             <div class="col-md-12" id="treemapVis">
                 <!-- TODO: delete placeholder svg element -->
                 <!--<svg width="650" height="440" style="background-color: lightgreen">
@@ -126,17 +123,10 @@
             var treemapData = [];
             var popmapData = [];
 			var pyramidData = [];
+			
 			// Creat the root node for the treemap
 			var root = {};
 			
-			// map variable for population map
-			 var map = d3.geomap.choropleth()
-                         .geofile('countries/USA.json')
-                         .projection(d3.geo.albersUsa)
-                         .column('White')
-                         .unitId('fips')
-                         .scale(1000)
-                         .legend(true);
 
             // call this function after Data is loaded, reformatted and bound to the variables
             var initVis = function(){
@@ -149,8 +139,8 @@
                 // instantiates all Vis Objects here
 				debugger;
                var treemap_vis = new TreemapVis(d3.select("#treemapVis"), root, MyEventHandler);
-               //var popmap_vis = new PopmapVis(d3.select("#popmapVis"), popmapData, MyEventHandler);
-               //var pyramid_vis = new PyramidVis(d3.select("#pyramidVis"), pyramidData, MyEventHandler);
+               var popmap_vis = new PopmapVis(d3.select("#popmapVis"), popmapData, MyEventHandler);
+               var pyramid_vis = new PyramidVis(d3.select("#pyramidVis"), pyramidData, MyEventHandler);
 			   
 				// TODO: bind the eventHandler to the Vis Objects
 				//$(MyEventHandler).bind("selectionChanged", function(event, startData, endDate){
@@ -224,10 +214,6 @@
                      
 					popmapData = _popmapData; 
 					
-					// Call to draw population map
-					  d3.select('#popmapVis')
-                        .datum(popmapData)
-                        .call(map.draw, map);
 					
 					
 					debugger;
@@ -243,14 +229,15 @@
 			    // Load data asynchronously
 		        queue()
                   .defer(d3.csv, "data/racetreemap.csv")
-                  .defer(d3.csv, "data/race2013.csv")
+                  .defer(d3.csv, "data/est08ALL.csv")
 				  .defer(d3.csv,"data/raw_genderbystate2013.csv")
+				  .defer(d3.json, "/js/us-10m.json")
 				  .await(dataLoaded);
 				  
 
                 //TODO: load data here and call "dataLoaded" afterwards
                 // Hint: http://giscollective.org/d3-queue-js/
-				dataLoaded(treemapData, popmapData,pyramidData);
+				dataLoaded(treemapData, popmapData,pyramidData,us);
 				//initVis();
 
             }

@@ -5,9 +5,10 @@ PopmapVis = function(_parentElement, _data,_eventHandler){
 
 var map = d3.geomap.choropleth()
     .geofile('countries/USA.json')
+	//.geofile('/js/us-10m.json')
     .projection(d3.geo.albersUsa)
-    .column('White')
-    .unitId('fips')
+    .column('rate')
+    .unitId('FIPS2')
     .scale(1000)
     .legend(true);
 

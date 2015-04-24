@@ -14,7 +14,7 @@
 	<script src="http://d3js.org/queue.v1.min.js"></script>
 	<script src="http://d3js.org/topojson.v1.min.js"></script>
 	<!-- <script src="http://d3js.org/d3.v3.min.js"></script>-->
-	<script src="http://d3js.org/d3.v2.js"></script>
+	<script src="http://d3js.org/d3.v3.js"></script>
 
    
     <script src="/d3-geomap/vendor/d3.geomap.dependencies.min.js"></script>
@@ -228,7 +228,7 @@
 			    // Load data asynchronously
 		        queue()
                   .defer(d3.csv, "data/racetreemap.csv")
-                  .defer(d3.csv, "data/race2013.csv")
+                  .defer(d3.csv, "data/est08ALL.csv")
 				  .defer(d3.csv,"data/raw_genderbystate2013.csv")
 				  .await(dataLoaded);
 				  
