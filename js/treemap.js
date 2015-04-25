@@ -3,7 +3,6 @@ TreemapVis = function(_parentElement, _data,_eventHandler){
     this.data = _data;
 	this.eventHandler = _eventHandler;
     //this.displayData = [];
-    debugger;
      // TODO: define all "constants" here
     //this.margin = {top: 20, right: 0, bottom: 0, left: 0},
     //this.width = getInnerWidth(this.parentElement) - this.margin.left - this.margin.right,

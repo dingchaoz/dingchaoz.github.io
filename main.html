@@ -38,6 +38,7 @@
     <script src="js/treemap.js"></script>
 	<script src = "js/pyramid.js"></script>
     <script src = "js/popmap_c.js"></script>
+	<script src = "js/popmap_all.js"></script>
 	<script src="/libs/legend.js"></script>
     <script src="/libs/colorbrewer.js"></script>
 
@@ -79,16 +80,27 @@
 
 
         </div>
+		
+       <div class="row">
+		<p>Census map</p>
+            <div class="col-md-12" id="popmapallVis">
+                <!-- TODO: delete placeholder svg element -->
+                <!-- <svg width="650" height="440" style="background-color: lightgreen">
+                    <text x="50" y="50">HERE should be PrioVis</text>
+                </svg>-->
+            </div>
+
+        </div>
 
 
-
-        <div class="row">
+        <!-- <div class="row">
             <div class="col-md-9" id="popmapVis">
                 <!-- TODO: delete placeholder svg element -->
                 <!-- <svg width="650" height="330" style="background-color: lightblue">
                     <text x="50" y="50">HERE should be CountVis</text>
                 </svg>-->
-            </div>
+            <!-- </div>-->
+			
             <div class="col-md-3" id="pyramidVis">
                 <!-- TODO: delete placeholder svg element -->
                 <!-- <svg width="230" height="330" style="background-color: lightcoral">
@@ -123,9 +135,10 @@
 
             // variables keeping global knowledge of the data
             var treemapData = [];
-            var popmapData = [];
+            //var popmapData = [];
 			var pyramidData = [];
 			var us = [];
+			var allData = [];
 			
 			// Creat the root node for the treemap
 			var root = {};
@@ -142,8 +155,9 @@
                 // instantiates all Vis Objects here
 				debugger;
                var treemap_vis = new TreemapVis(d3.select("#treemapVis"), root, MyEventHandler);
-               var popmap_vis = new PopmapVis(d3.select("#popmapVis"), popmapData,us, MyEventHandler);
+               //var popmap_vis = new PopmapVis(d3.select("#popmapVis"), popmapData,us, MyEventHandler);
                var pyramid_vis = new PyramidVis(d3.select("#pyramidVis"), pyramidData, MyEventHandler);
+			   var popmapall_vis = new PopmapallVis(d3.select("#popmapallVis"), allData,us, MyEventHandler);
 			   
 				// TODO: bind the eventHandler to the Vis Objects
 				//$(MyEventHandler).bind("selectionChanged", function(event, startData, endDate){
@@ -159,7 +173,7 @@
             }
 
             // call this function after both files are loaded -- error should be "null" if no error
-            var dataLoaded = function (error, _treemapData, _popmapData,_pyramidData,_us) {
+            var dataLoaded = function (error, _treemapData,_pyramidData,_us,_allData) {
 
                 if (!error) {
 
@@ -215,8 +229,9 @@
                     *
                     * */
                      
-					popmapData = _popmapData; 
+					//popmapData = _popmapData; 
 					us = _us;
+					allData = _allData;
 					
 					
 					debugger;
@@ -232,15 +247,16 @@
 			    // Load data asynchronously
 		        queue()	
                   .defer(d3.csv, "data/racetreemap.csv")
-                  .defer(d3.csv, "data/est08ALL.csv")
+                  //.defer(d3.csv, "data/est08ALL.csv")
 				  .defer(d3.csv,"data/raw_genderbystate2013.csv")
 				  .defer(d3.json, "/js/us-10m.json")
+				  .defer(d3.csv, "/data/alldata.csv")
 				  .await(dataLoaded);
 				  
 
                 //TODO: load data here and call "dataLoaded" afterwards
                 // Hint: http://giscollective.org/d3-queue-js/
-				dataLoaded(treemapData, popmapData,pyramidData,us);
+				dataLoaded(treemapData,pyramidData,us,allData);
 				//initVis();
 
             }
