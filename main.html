@@ -18,7 +18,7 @@
 
    
     <script src="/d3-geomap/vendor/d3.geomap.dependencies.min.js"></script>
-    <script src="/d3-geomap/js/d3.geomap.min.js"></script>-->
+    <script src="/d3-geomap/js/d3.geomap.min.js"></script>
 
 
     <!--Stylesheets-->
@@ -63,23 +63,48 @@
 <body>
     <div class="container">
         <h1>US Census Visualization</h1>
-
-        <div class="row">
-            <div class="col-md-8 col-sm-12">
-               <p> Population Map</p>
-            </div>
-
-        </div>
-
-        <div class="row">
-            <div class="col-md-2">
-                <button class="btn btn-sm btn-primary" id="fitInBtn"> <span class="glyphicon glyphicon-resize-horizontal"></span> reset zoom </button>
-            </div>
-
-
-
-
-        </div>
+		
+	  <P>Time update: </p>
+      <label id="ymin" value="">2008</label>
+      <input type="range" name="points" min="2008" max="2013" step="1" value="0" id="slider-time" oninput="rangechanged(this.value)"> 
+      <label id="ymax" value="">2013</label>
+      </br>Ethnic group by:
+      <label>
+        <input type="checkbox" name="encode" value="white" onchange="reactFunc()" checked="checked" >White
+		<input type="checkbox" name="encode" value="black" onchange="reactFunc()" >Black
+        <input type="checkbox" name="encode" value="hispanic" onchange="reactFunc()" >Hispanic
+		<input type="checkbox" name="encode" value="asian" onchange="reactFunc()" >Asian
+		<input type="checkbox" name="encode" value="native" onchange="reactFunc()" >Native
+      </label>
+	   </br>Filter by Age group: 
+      <select>
+           <option value="volvo">All ages</option>
+           <option value="saab">0 to 4 years</option>
+           <option value="opel">5 to 9 years</option>
+           <option value="audi">10 to 14 years</option>
+		   <option value="saab">15 to 19 years</option>
+           <option value="opel">20 to 24 years</option>
+           <option value="audi">25 to 29 years</option>
+		   <option value="saab">30 to 34 years</option>
+           <option value="opel">35 to 39 years</option>
+           <option value="audi">40 to 44 years</option>
+		   <option value="saab">45 to 49 years</option>
+           <option value="opel">50 to 54 years</option>
+           <option value="audi">55 to 59 years</option>
+		   <option value="saab">60 to 64 years</option>
+           <option value="opel">65 to 69 years</option>
+           <option value="audi">70 to 74 years</option>
+		   <option value="opel">75 to 79 years</option>
+		   <option value="audi">80 to 84 years</option>
+		   <option value="audi">85 years or older</option>
+      </select>
+	  <br>
+      Filter by gender:
+      <label>
+        <input type="checkbox" name="male" value="male" title="Male"  onchange="reactFunc()">Male
+        <input type="checkbox" name="female" value="female" title="Female" onchange="reactFunc()" checked="checked >Female
+      </label>
+      </br>
 		
        <div class="row">
 		<p>Census map</p>

@@ -150,7 +150,7 @@ legend
         var extent = quantize.invertExtent(d);
         //extent will be a two-element array, format it however you want:
         var format = d3.format("0.2f");
-        return format(+extent[0]) + " - " + format(+extent[1]) + " % ";
+        return format(+(extent[0]*100)) + " - " + format(+(extent[1]*100)) + " % ";
     });
     
 // legend us referred from http://bl.ocks.org/ZJONSSON/3918369
