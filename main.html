@@ -37,7 +37,6 @@
     <!-- add own vis classes-->
     <script src="js/treemap.js"></script>
 	<script src = "js/pyramid.js"></script>
-    <script src = "js/popmap_c.js"></script>
 	<script src = "js/popmap_all.js"></script>
 	<script src="/libs/legend.js"></script>
     <script src="/libs/colorbrewer.js"></script>
@@ -64,10 +63,12 @@
     <div class="container">
         <h1>US Census Visualization</h1>
 		
-	  <P>Time update: </p>
+	  Year Selected: 	  <span id="range">2008</span>
+      <br>	  
       <label id="ymin" value="">2008</label>
-      <input type="range" name="points" min="1" max="6" step="1" value="1" id="slider-time" oninput="rangechanged(this.value)"> 
+      <input type="range" name="points" min="1" max="6" step="1" value="1" id="slider-time" oninput="rangechanged(this.value)" onchange="showValue(this.value)"> 
       <label id="ymax" value="">2013</label>
+
       </br>Ethnic group by:
       <label>
         <input type="checkbox" name="encode" value="white" onchange="reactFunc()" checked="checked" >White
@@ -151,24 +152,34 @@
 
     <script>
 	
-	var year;
-	
-			function rangechanged(value) {
 
-               year = value;
-			   console.log(year);
-			   console.log(value);
-       
-
-}
         //$(function(){ // this function is called after the HTML document is fully loaded
 
 
             //==========================================
             //--- HERE IS WHERE ALL THE MAGIC STARTS --
             //==========================================
-            
+       // show the year selected in menu
+       function showValue(newValue)
+{
+	var value = Number(newValue) + 2007;
+	document.getElementById("range").innerHTML=value;
+}
+
+		
+		var year;
 	
+			function rangechanged(value) {
+
+               year = value;
+			   console.log(year);
+			   console.log(value);
+			   popmapall_vis.change(year);
+			   //var MyEventHandler = new Object();
+			   //var popmapall_vis = new PopmapallVis(d3.select("#popmapallVis"), allData,us,year, MyEventHandler);
+       
+
+}
 				
 			
 			
@@ -182,6 +193,8 @@
 			
 			// Creat the root node for the treemap
 			var root = {};
+			
+			var popmapall_vis;
 			
 
             // call this function after Data is loaded, reformatted and bound to the variables
@@ -197,7 +210,7 @@
                var treemap_vis = new TreemapVis(d3.select("#treemapVis"), root, MyEventHandler);
                //var popmap_vis = new PopmapVis(d3.select("#popmapVis"), popmapData,us, MyEventHandler);
                var pyramid_vis = new PyramidVis(d3.select("#pyramidVis"), pyramidData, MyEventHandler);
-			   var popmapall_vis = new PopmapallVis(d3.select("#popmapallVis"), allData,us,year, MyEventHandler);
+			   popmapall_vis = new PopmapallVis(d3.select("#popmapallVis"), allData,us,year, MyEventHandler);
 			   
 				// TODO: bind the eventHandler to the Vis Objects
 				//$(MyEventHandler).bind("selectionChanged", function(event, startData, endDate){

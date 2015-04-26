@@ -10,7 +10,6 @@ PopmapallVis = function(_parentElement, _data,_us,_year,_eventHandler){
 
 PopmapallVis.prototype.initVis = function() {
 
- alert("popmap now");
 
 // template http://bl.ocks.org/mbostock/4060606
 
@@ -60,11 +59,23 @@ this.updateVis();
 
 }
 
+PopmapallVis.prototype.change = function(_year) {
+
+
+this.year = _year;
+this.wrangleData(null);
+this.updateVis();
+
+
+}
+
+
 PopmapallVis.prototype.wrangleData = function() {
 
 
 _data = this.data;
-console.log(_data);
+_year = this.year;
+console.log(_year);
 
 // reserverd for filter data	
 var seldata = [];
@@ -88,10 +99,15 @@ rateById = d3.map();
 
 // filter by year and age group first to get one record per county
 function flt(value) {
-
+  if(_year != null) {
   //return value.YEAR == Number(_year) && value.AGEGRP == 0;
-  return value.YEAR == 5 && value.AGEGRP == 0;
-
+  return value.YEAR == Number(_year) && value.AGEGRP == 0;
+  }
+  else
+  {
+  
+   return value.YEAR == 5 && value.AGEGRP == 0;
+   }
 
 }
 
@@ -143,11 +159,16 @@ PopmapallVis.prototype.updateVis = function(){
   var height = this.heigth;
   var path = this.path;
   
+  // remove old graph
+  this.svg.selectAll("g").transition().duration(25).remove();
+
+  
   this.svg.append("g")
       .attr("class", "counties")
     .selectAll("path")
       .data(topojson.feature(_us, _us.objects.counties).features)
     .enter().append("path")
+	.transition()
       .attr("fill", function(d) { return quantize(rateById.get(d.id)); })
       .attr("d", path);
 	  //.attr("data-legend",function(d) { return quantize(rateById.get(d.id));});
