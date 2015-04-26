@@ -1,17 +1,28 @@
-PopmapallVis = function(_parentElement, _data,_us,_eventHandler){
+PopmapallVis = function(_parentElement, _data,_us,_year,_eventHandler){
     this.parentElement = _parentElement;
-    //this.data = _data;
-	//this.us = _us;
+    this.data = _data;
+	this.us = _us;
+	this.year = _year;
 	this.eventHandler = _eventHandler;
 
+    this.initVis();
+}
+
+PopmapallVis.prototype.initVis = function() {
+
+ alert("popmap now");
 
 // template http://bl.ocks.org/mbostock/4060606
 
-var width = 960,
-    height = 600;
-	
-// rateById has the id, rate data from csv file
-var rateById = d3.map();
+//function initVis (data,us,year) {
+
+//_data = data;
+//_us = us,
+//_year = year;
+
+
+var width = 960;
+var height = 600;
 
 
 //Define default colorbrewer scheme
@@ -21,36 +32,47 @@ var colorScheme = colorbrewer[colorSchemeSelect];
 //define default number of quantiles
 var quantiles = 5;
 
-var quantize = d3.scale.quantize()
+this.quantize = d3.scale.quantize()
     //.domain([3, 55])
 	// template	http://eyeseast.github.io/visible-data/2013/08/27/responsive-legends-with-d3/
 	// can set to Oranges, Greens Blues or any other color, and category to 3-8, details seen lib/colorbrewer.js
 	.range(colorScheme[quantiles]);
 
 
-var projection = d3.geo.albersUsa()
+projection = d3.geo.albersUsa()
     .scale(1280)
     .translate([width / 2, height / 2]);
 	//.legend(true);
 
-var path = d3.geo.path()
+this.path = d3.geo.path()
     .projection(projection);
 
-var svg = d3.select("#popmapallVis").append("svg")
+this.svg = d3.select("#popmapallVis").append("svg")
     .attr("width", width)
     .attr("height", height);
+	
+this.width = width;
+this.height = height;
+	
+this.wrangleData(null);
+
+this.updateVis();
+
+}
+
+PopmapallVis.prototype.wrangleData = function() {
+
+
+_data = this.data;
+console.log(_data);
 
 // reserverd for filter data	
 var seldata = [];
 
-//queue()
-    //.defer(d3.json, "/js/us-10m.json")
-    //.defer(d3.csv, "/data/est08ALL.csv", function(d) { rateById.set(d.id, +d.rate); })
-	//.defer(d3.csv, "/data/est08ALL.csv")
-    //.await(ready);
-	
-// test to load data other than use rateById
-	
+
+// rateById has the id, rate data from csv file
+rateById = d3.map();
+
 
 
 // Filter data according to user selection, need to have 4 dropdown menus for
@@ -63,10 +85,12 @@ var seldata = [];
 // race or gender is select
 
 
+
 // filter by year and age group first to get one record per county
 function flt(value) {
 
-  return value.YEAR == 1 && value.AGEGRP == 0;
+  //return value.YEAR == Number(_year) && value.AGEGRP == 0;
+  return value.YEAR == 5 && value.AGEGRP == 0;
 
 
 }
@@ -87,7 +111,7 @@ flter.forEach(function (d) {
                           })
 						  
 // Set the quantize domain range by getting min and max value of seldata
- quantize.domain([
+ this.quantize.domain([
          d3.min(seldata, function (d) {
            return Number(d.rate)
          }),
@@ -104,7 +128,22 @@ flter.forEach(function (d) {
 //d3.map(_data,function(d) { rateById.set(d.id, +d.rate); });
 d3.map(seldata,function(d) { rateById.set(d.id, +d.rate); });
 
-  svg.append("g")
+
+this.rateById = rateById;
+
+
+}
+
+PopmapallVis.prototype.updateVis = function(){
+
+  _us = this.us;
+  var quantize = this.quantize;
+  var rateById = this.rateById;
+  var width = this.width;
+  var height = this.heigth;
+  var path = this.path;
+  
+  this.svg.append("g")
       .attr("class", "counties")
     .selectAll("path")
       .data(topojson.feature(_us, _us.objects.counties).features)
@@ -121,7 +160,7 @@ d3.map(seldata,function(d) { rateById.set(d.id, +d.rate); });
       //.attr("d", path);
 	  
 	  
-  var legend = svg.selectAll('g.legendEntry')
+  var legend = this.svg.selectAll('g.legendEntry')
     .data(quantize.range())
     .enter()
     .append('g').attr('class', 'legendEntry');
@@ -153,20 +192,6 @@ legend
         return format(+(extent[0]*100)) + " - " + format(+(extent[1]*100)) + " % ";
     });
     
-// legend us referred from http://bl.ocks.org/ZJONSSON/3918369
-	//legend = svg.append("g")
-    //.attr("class","legend")
-    //.attr("transform","translate(900,300)")
-    //.style("font-size","12px")
-    //.call(d3.legend)
-	
-	
-   //setTimeout(function() { 
-    //legend
-      //.style("font-size","20px")
-      //.attr("data-style-padding",10)
-      //.call(d3.legend)
-  //},1000)	  
 
 
 
