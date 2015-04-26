@@ -24,6 +24,7 @@
     <!--Stylesheets-->
     <link rel="stylesheet" type="text/css" href="treemap/style.css" />
     <link href="/d3-geomap/css/d3.geomap.css" rel="stylesheet">
+	 <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
 	<link rel="stylesheet" href="pyramid/pyramid.css">
 
     <!-- Get some nice font-->
@@ -45,6 +46,17 @@
     <!-- add own stylesheet-->
     <link rel="stylesheet" type="text/css" href="css/myStyle.css">
 	 <style type="text/css">
+	 
+	#header {
+    background-color:#eeeeee;
+    color:black;
+    text-align:center;
+
+    }
+    	#nav {
+    line-height:30px;
+
+}
     body {
       width: 800px;
       margin: 25px auto;
@@ -61,14 +73,18 @@
 </head>
 <body>
     <div class="container">
+	    <div id="header">
         <h1>US Census Visualization</h1>
+		</div>
+	<div class="row">
+	<div class="col-md-4" id="nav">
+           
 		
 	  Year Selected: 	  <span id="range">2008</span>
       <br>	  
-      <label id="ymin" value="">2008</label>
-      <input type="range" name="points" min="1" max="6" step="1" value="1" id="slider-time" oninput="rangechanged(this.value)" onchange="showValue(this.value)"> 
-      <label id="ymax" value="">2013</label>
-
+      <!--<label id="ymin" value="">2008</label>-->
+      <input type="range" name="points" min="1" max="6" step="1" value="1" id="slider-time" oninput="rangechanged(this.value)" onchange="showValue(this.value)">
+        <!--<label id="ymax" value="">2013</label>-->
       </br>Ethnic group by:
       <label>
         <input type="checkbox" name="encode" value="white" onchange="reactFunc()" checked="checked" >White
@@ -83,7 +99,7 @@
            <option value="saab">0 to 4 years</option>
            <option value="opel">5 to 9 years</option>
            <option value="audi">10 to 14 years</option>
-		   <option value="saab">15 to 19 years</option>
+		   <option value="saab">15 to 19 years</option>	
            <option value="opel">20 to 24 years</option>
            <option value="audi">25 to 29 years</option>
 		   <option value="saab">30 to 34 years</option>
@@ -106,45 +122,24 @@
         <input type="checkbox" name="female" value="female" title="Female" onchange="reactFunc()" checked="checked" > Female
       </label>
       </br>
-		
-       <div class="row">
-		<p>Census map</p>
-            <div class="col-md-12" id="popmapallVis">
-                <!-- TODO: delete placeholder svg element -->
-                <!-- <svg width="650" height="440" style="background-color: lightgreen">
-                    <text x="50" y="50">HERE should be PrioVis</text>
-                </svg>-->
+		 </div>
+       
+            <div class="col-md-8" id="popmapallVis">
+            </div>
+
+       </div>	
+	   
+	   <div class="row">
+	   
+       <div class="col-md-4" id="pyramidVis">
+
+       </div>
+
+     
+            <div class="col-md-8" id="treemapVis">
             </div>
 
         </div>
-
-
-        <!-- <div class="row">
-            <div class="col-md-9" id="popmapVis">
-                <!-- TODO: delete placeholder svg element -->
-                <!-- <svg width="650" height="330" style="background-color: lightblue">
-                    <text x="50" y="50">HERE should be CountVis</text>
-                </svg>-->
-            <!-- </div>-->
-			
-            <div class="col-md-3" id="pyramidVis">
-                <!-- TODO: delete placeholder svg element -->
-                <!-- <svg width="230" height="330" style="background-color: lightcoral">
-                    <text x="50" y="50">HERE should be AgeVis</text>
-                </svg>-->
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-12" id="treemapVis">
-                <!-- TODO: delete placeholder svg element -->
-                <!--<svg width="650" height="440" style="background-color: lightgreen">
-                    <text x="50" y="50">HERE should be PrioVis</text>
-                </svg>-->
-            </div>
-
-        </div>
-		
 
     </div>
 
@@ -154,36 +149,25 @@
 	
 
         //$(function(){ // this function is called after the HTML document is fully loaded
-
+        //TO DO : Place to look at layout http://www.w3schools.com/html/html_layout.asp
 
             //==========================================
             //--- HERE IS WHERE ALL THE MAGIC STARTS --
             //==========================================
-       // show the year selected in menu
-       function showValue(newValue)
-{
-	var value = Number(newValue) + 2007;
-	document.getElementById("range").innerHTML=value;
-}
+          // show the year selected in menu
+           function showValue(newValue) {
+	          var value = Number(newValue) + 2007;
+	          document.getElementById("range").innerHTML=value;
+           }
 
-		
-		var year;
-	
+		  
+	        // trigger map change based in the year
 			function rangechanged(value) {
 
-               year = value;
-			   console.log(year);
-			   console.log(value);
-			   popmapall_vis.change(year);
-			   //var MyEventHandler = new Object();
-			   //var popmapall_vis = new PopmapallVis(d3.select("#popmapallVis"), allData,us,year, MyEventHandler);
-       
+			   popmapall_vis.change(value);
 
-}
+            }
 				
-			
-			
-
             // variables keeping global knowledge of the data
             var treemapData = [];
             //var popmapData = [];
@@ -194,6 +178,7 @@
 			// Creat the root node for the treemap
 			var root = {};
 			
+			// Pull out this vis outside of init function, so it can be access by other functions triggered by menu
 			var popmapall_vis;
 			
 
@@ -210,7 +195,7 @@
                var treemap_vis = new TreemapVis(d3.select("#treemapVis"), root, MyEventHandler);
                //var popmap_vis = new PopmapVis(d3.select("#popmapVis"), popmapData,us, MyEventHandler);
                var pyramid_vis = new PyramidVis(d3.select("#pyramidVis"), pyramidData, MyEventHandler);
-			   popmapall_vis = new PopmapallVis(d3.select("#popmapallVis"), allData,us,year, MyEventHandler);
+			   popmapall_vis = new PopmapallVis(d3.select("#popmapallVis"), allData,us, MyEventHandler);
 			   
 				// TODO: bind the eventHandler to the Vis Objects
 				//$(MyEventHandler).bind("selectionChanged", function(event, startData, endDate){

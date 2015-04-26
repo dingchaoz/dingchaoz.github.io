@@ -13,7 +13,7 @@ PyramidVis = function(_parentElement, _data,_eventHandler){
 
 /* edit these settings freely */  
 var w = 300,
-    h = 500,
+    h = 420,
     topMargin = 15,
     labelSpace = 40,
     innerMargin = w/2+labelSpace,

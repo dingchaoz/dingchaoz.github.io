@@ -13,8 +13,8 @@ if(parent.document.getElementsByTagName("iframe")[0]) {
 }
  
 var margin = {top: 20, right: 0, bottom: 0, left: 0},
-    width = 820,
-    height = 700 - margin.top - margin.bottom,
+    width = 750,
+    height = 420 - margin.top - margin.bottom,
     formatNumber = d3.format(".2s"),
     transitioning;
  
@@ -41,6 +41,7 @@ var svg = d3.select("#treemapVis").append("svg")
 	.style("margin.right", -margin.right + "px")
 	.append("g")
 	.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+	//.attr("transform", "translate(80,0)")
 	.style("shape-rendering", "crispEdges");
  
 var color = d3.scale.category20c();

@@ -1,8 +1,8 @@
-PopmapallVis = function(_parentElement, _data,_us,_year,_eventHandler){
+PopmapallVis = function(_parentElement, _data,_us,_eventHandler){
     this.parentElement = _parentElement;
     this.data = _data;
 	this.us = _us;
-	this.year = _year;
+	//this.year = _year;
 	this.eventHandler = _eventHandler;
 
     this.initVis();
@@ -20,8 +20,8 @@ PopmapallVis.prototype.initVis = function() {
 //_year = year;
 
 
-var width = 960;
-var height = 600;
+var width = 860;
+var height = 420;
 
 
 //Define default colorbrewer scheme
@@ -39,7 +39,7 @@ this.quantize = d3.scale.quantize()
 
 
 projection = d3.geo.albersUsa()
-    .scale(1280)
+    .scale(900)
     .translate([width / 2, height / 2]);
 	//.legend(true);
 
@@ -188,9 +188,9 @@ PopmapallVis.prototype.updateVis = function(){
 
 legend
     .append('rect')
-    .attr("x", width - 120)
+    .attr("x", width - 160)
     .attr("y", function(d, i) {
-       return i * 20 + 401.5;
+       return i * 20 + 301.5;
     })
    .attr("width", 10)
    .attr("height", 10)
@@ -201,9 +201,9 @@ legend
 
 legend
     .append('text')
-    .attr("x", width - 105) //leave 5 pixel space after the <rect>
+    .attr("x", width - 145) //leave 5 pixel space after the <rect>
     .attr("y", function(d, i) {
-       return i * 20 + 400;
+       return i * 20 + 300;
     })
     .attr("dy", "0.8em") //place text one line *below* the x,y point
     .text(function(d,i) {
