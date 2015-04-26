@@ -25,17 +25,17 @@ var height = 420;
 
 
 //Define default colorbrewer scheme
-var colorSchemeSelect = "Oranges";
-var colorScheme = colorbrewer[colorSchemeSelect]; 
+//var colorSchemeSelect = "Oranges";
+//var colorScheme = colorbrewer[colorSchemeSelect]; 
 
 //define default number of quantiles
-var quantiles = 5;
+//var quantiles = 5;
 
-this.quantize = d3.scale.quantize()
+//this.quantize = d3.scale.quantize()
     //.domain([3, 55])
 	// template	http://eyeseast.github.io/visible-data/2013/08/27/responsive-legends-with-d3/
 	// can set to Oranges, Greens Blues or any other color, and category to 3-8, details seen lib/colorbrewer.js
-	.range(colorScheme[quantiles]);
+	//.range(colorScheme[quantiles]);
 
 
 projection = d3.geo.albersUsa()
@@ -59,13 +59,20 @@ this.updateVis();
 
 }
 
-PopmapallVis.prototype.change = function(_year) {
+// Get inputs from menu and call wrangle data, update vis
+PopmapallVis.prototype.change = function(_input) {
 
 
-this.year = _year;
-this.wrangleData(null);
-this.updateVis();
-
+this.year = _input.year;
+console.log(_input);
+this.race = _input.race;
+this.gender = _input.gender;
+if(this.race != null && this.gender !=null || this.year != null)
+//if (this.race == null)
+{
+  this.wrangleData(null);
+  this.updateVis();
+}
 
 }
 
@@ -75,10 +82,14 @@ PopmapallVis.prototype.wrangleData = function() {
 
 _data = this.data;
 _year = this.year;
-console.log(_year);
+_race = this.race;
+_gender = this.gender;
 
 // reserverd for filter data	
 var seldata = [];
+
+// selected race and gender group;
+// var rg = stringcombine(_race+"_"+"FEMALE");
 
 
 // rateById has the id, rate data from csv file
@@ -117,14 +128,64 @@ var flter = _data.filter(flt);
 // now select only columns id and total population and push them into seldata
 
 flter.forEach(function (d) {
-					 
-                               seldata.push ({
+					           if(_race != null && _gender != null){
+							      a = _race[0].concat("_",_gender[0]);
+							      seldata.push ({
                                     id: d.id ,
-									//parse in the poverty rate as number
-                                    rate: Number(d.WA_FEMALE) 
-                                });
+									 rate: Number(d[a])
+							                   })
+                                }											   
+							   else {
+							   
+							      seldata.push ({
+                                    id: d.id ,
+									rate: Number(d.WA_FEMALE)
+							      
+							                    })								
+                                    //rate: Number(d.rg[0])	+ Number(d.rg[1]) + ...	
+                                    //a = _input.race[0].concat("_",input.gender[0])	
+                                    //d[a] should do the trick									
+                                }
      
                           })
+						  
+
+
+var colorSchemeSelect;						  
+//Define default colorbrewer scheme
+if (_race == null) {
+   colorSchemeSelect = "GnBu";
+}
+else if (_race == "WA"){
+   colorSchemeSelect = "GnBu";
+}
+else if (_race == "BA"){
+   colorSchemeSelect = "Greens";
+}
+else if (_race == "IA"){
+   colorSchemeSelect = "Reds";
+}
+else if (_race == "H"){
+   colorSchemeSelect = "Oranges";
+}
+else if (_race == "AA"){
+   colorSchemeSelect = "RdPu";
+}
+ 
+
+
+
+//var colorSchemeSelect = "Oranges";
+var colorScheme = colorbrewer[colorSchemeSelect]; 
+
+//define default number of quantiles
+var quantiles = 5;
+
+this.quantize = d3.scale.quantize()
+    //.domain([3, 55])
+	// template	http://eyeseast.github.io/visible-data/2013/08/27/responsive-legends-with-d3/
+	// can set to Oranges, Greens Blues or any other color, and category to 3-8, details seen lib/colorbrewer.js
+	.range(colorScheme[quantiles]);
 						  
 // Set the quantize domain range by getting min and max value of seldata
  this.quantize.domain([

@@ -87,11 +87,11 @@
         <!--<label id="ymax" value="">2013</label>-->
       </br>Ethnic group by:
       <label>
-        <input type="checkbox" name="encode" value="white" onchange="reactFunc()" checked="checked" >White
-		<input type="checkbox" name="encode" value="black" onchange="reactFunc()" >Black
-        <input type="checkbox" name="encode" value="hispanic" onchange="reactFunc()" >Hispanic
-		<input type="checkbox" name="encode" value="asian" onchange="reactFunc()" >Asian
-		<input type="checkbox" name="encode" value="native" onchange="reactFunc()" >Native
+        <input type="checkbox" name="encode" value="WA" onchange="reactFunc()" checked="checked" >White
+		<input type="checkbox" name="encode" value="BA" onchange="reactFunc()" >Black
+        <input type="checkbox" name="encode" value="H" onchange="reactFunc()" >Hispanic
+		<input type="checkbox" name="encode" value="AA" onchange="reactFunc()" >Asian
+		<input type="checkbox" name="encode" value="IA" onchange="reactFunc()" >Native
       </label>
 	   </br>Filter by Age group: 
       <select>
@@ -118,8 +118,8 @@
 	  <br>
       Filter by gender:
       <label>
-        <input type="checkbox" name="male" value="male" title="Male"  onchange="reactFunc()">Male
-        <input type="checkbox" name="female" value="female" title="Female" onchange="reactFunc()" checked="checked" > Female
+        <input type="checkbox" name="gender" value="MALE" title="Male"  onchange="reactFunc()">Male
+        <input type="checkbox" name="gender" value="FEMALE" title="Female" onchange="reactFunc()" checked="checked" > Female
       </label>
       </br>
 		 </div>
@@ -160,11 +160,47 @@
 	          document.getElementById("range").innerHTML=value;
            }
 
-		  
+		    var input = [];
 	        // trigger map change based in the year
 			function rangechanged(value) {
+               
+			   input.year = value;
+			   popmapall_vis.change(input);
 
-			   popmapall_vis.change(value);
+            }
+			
+			
+			 // trigger map change based in filter and selection inputs
+			function reactFunc() {
+			
+			sRace = [];
+			sGender = [];
+			
+			//check Filter button of race selection
+            d3.selectAll("input").each(function(d) {  
+              if(d3.select(this).attr("name") == "encode" && d3.select(this).node().checked) {
+                 sRace.push(d3.select(this).attr("value"));
+              }
+			  
+			input.race = sRace;
+			//popmapall_vis.change(input);
+			
+            })
+			
+			//check Filter button of gender selection
+            d3.selectAll("input").each(function(d) {  
+              if(d3.select(this).attr("name") == "gender" && d3.select(this).node().checked) {
+                 sGender.push(d3.select(this).attr("value"));
+              }
+			  
+			input.gender = sGender;
+			//popmapall_vis.change(input);
+			
+            })
+			
+			
+			
+		   popmapall_vis.change(input);
 
             }
 				
