@@ -67,7 +67,7 @@ this.year = _input.year;
 console.log(_input);
 this.race = _input.race;
 this.gender = _input.gender;
-if(this.race != null && this.gender !=null || this.year != null)
+if(this.race != null && this.gender !=null && this.gender != "" && this.race != "" || this.year != null)
 //if (this.race == null)
 {
   this.wrangleData(null);
@@ -129,6 +129,7 @@ var flter = _data.filter(flt);
 
 flter.forEach(function (d) {
 					           if(_race != null && _gender != null){
+							      
 							      a = _race[0].concat("_",_gender[0]);
 							      seldata.push ({
                                     id: d.id ,
@@ -170,6 +171,11 @@ else if (_race == "H"){
 }
 else if (_race == "AA"){
    colorSchemeSelect = "RdPu";
+}
+else {
+
+   colorSchemeSelect = "Dark2";
+
 }
  
 
@@ -225,21 +231,32 @@ PopmapallVis.prototype.updateVis = function(){
 
   
   this.svg.append("g")
-      .attr("class", "counties")
+      .attr("class", "counties hvr-grow")
+	  .style("cursor", "pointer")	
     .selectAll("path")
       .data(topojson.feature(_us, _us.objects.counties).features)
     .enter().append("path")
-	.transition()
+	//.transition()
       .attr("fill", function(d) { return quantize(rateById.get(d.id)); })
-      .attr("d", path);
+      .attr("d", path)
+	  .append("title").text(function(d) {
+					return "county name, state " + (rateById.get(d.id) * 100).toPrecision(2) + "%";
+				});
+
 	  //.attr("data-legend",function(d) { return quantize(rateById.get(d.id));});
 
 
   // need to fix the path error	  
-  //svg.append("path")
-      //.datum(topojson.mesh(_us, _us.objects.states, function(a, b) { return a !== b; }))
-      //.attr("class", "states")
+  //this.svg.append("path")
+      //.datum(topojson.mesh(_us, _us.objects.counties, function(a, b) { return a !== b; }))
+      //.attr("class", "counties")
       //.attr("d", path);
+	  
+	  
+     this.svg.append("path")
+      .datum(topojson.mesh(_us, _us.objects.states, function(a, b) { return a !== b; }))
+      .attr("class", "states")
+      .attr("d", path);
 	  
 	  
   var legend = this.svg.selectAll('g.legendEntry')
