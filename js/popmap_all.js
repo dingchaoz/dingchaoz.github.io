@@ -130,17 +130,62 @@ var flter = _data.filter(flt);
 flter.forEach(function (d) {
 					           if(_race != null && _gender != null){
 							      
-							      a = _race[0].concat("_",_gender[0]);
+								  // sum of % of all combinations of race and gender
+								  //var sum;
+								  
+								  // index
+								  var a = [];
+								  
+								  // loop through all combinations of race and gender
+                                  for (i = 0; i< _race.length; i++){
+								      for (j = 0; j< _gender.length; j++) {
+									     a.push(_race[i].concat("_",_gender[j]))
+									  }						  
+								  }
+                                 
+								 // sum of % of all combinations of race and gender
+								 var sum = 0;
+                                 for(var i = 0; i < a.length; i++)
+                                {
+															   
+                                   sum = sum + Number(d[a[i]]);
+                                }
+								
+								// if two genders are selected
+								if(_gender.length == 2) {
+								   
+								   // divide by 2
+								   sum = sum/2;
+								}
+								
+								// if Hispanic race is selected
+								if(_race.indexOf("H")) {
+								   
+								   // divide by 2
+								   sum = sum * 0.88;
+								}
+								
+							     //a = _race[0].concat("_",_gender[0]);
+								  
 							      seldata.push ({
                                     id: d.id ,
-									 rate: Number(d[a])
+									 //rate: Number(d[a])
+									 rate: sum,
+									 stateid: d.STATE,
+									 countyid: d.COUNTY,
+									 stname:d.STNAME,
+									 ctyname:d.CTYNAME
 							                   })
                                 }											   
 							   else {
 							   
 							      seldata.push ({
                                     id: d.id ,
-									rate: Number(d.WA_FEMALE)
+									rate: Number(d.WA_FEMALE),
+									stateid: d.STATE,
+									countyid: d.COUNTY,
+									stname:d.STNAME,
+									ctyname:d.CTYNAME
 							      
 							                    })								
                                     //rate: Number(d.rg[0])	+ Number(d.rg[1]) + ...	
@@ -213,6 +258,7 @@ d3.map(seldata,function(d) { rateById.set(d.id, +d.rate); });
 
 
 this.rateById = rateById;
+this.seldata = seldata;
 
 
 }
@@ -222,6 +268,7 @@ PopmapallVis.prototype.updateVis = function(){
   _us = this.us;
   var quantize = this.quantize;
   var rateById = this.rateById;
+  var seldata = this.seldata;
   var width = this.width;
   var height = this.heigth;
   var path = this.path;
@@ -240,19 +287,34 @@ PopmapallVis.prototype.updateVis = function(){
       .attr("fill", function(d) { return quantize(rateById.get(d.id)); })
       .attr("d", path)
 	  .append("title").text(function(d) {
-					return "county name, state " + (rateById.get(d.id) * 100).toPrecision(2) + "%";
+	       var fullname;
+	       for (i = 0; i < seldata.length; i ++) {
+             if(seldata[i].id == d.id) {
+			   ctname = seldata[i].ctyname;
+			   var stname = seldata[i].stname;
+			   fullname = ctname.concat(",",stname," ");
+		       break;	 
+	           }
+              }     
+			        // return the cty, st name and the % when hover on
+					return fullname + (rateById.get(d.id) * 100).toPrecision(2) + "%";
 				});
 
 	  //.attr("data-legend",function(d) { return quantize(rateById.get(d.id));});
+  
+  
+  for (i = 0; i < seldata.length; i ++) {
+  
+     if(seldata[i].id == "1001") {
+	    console.log(seldata[i].ctyname);
+		break;	 
+	 }
+  }
 
-
-  // need to fix the path error	  
-  //this.svg.append("path")
-      //.datum(topojson.mesh(_us, _us.objects.counties, function(a, b) { return a !== b; }))
-      //.attr("class", "counties")
-      //.attr("d", path);
-	  
-	  
+  // To do: to change the states class css attribute as a function, which takes eventhandler from treemap
+  // when us.objects.states match in the us match with the state number in treemap, that state shows a different fill
+  // http://chimera.labs.oreilly.com/books/1230000000345/ch12.html#_choropleth the graph 
+    
      this.svg.append("path")
       .datum(topojson.mesh(_us, _us.objects.states, function(a, b) { return a !== b; }))
       .attr("class", "states")

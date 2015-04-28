@@ -111,20 +111,24 @@ padding: 5px;
     }
 .counties{      
                 fill: none;
-
+                
 		pointer-events: all;
 
 	}
 .counties :hover {
-  stroke: #000;
+   stroke: #000;
 
 }
 .states{
                 fill: none;
-                stroke: #fff;
+                stroke: #fff; 
                 stroke-linejoin: round;
 		pointer-events: all;
 	}
+.states :hover {
+    stroke: #000;
+
+}
 .hvr-grow {
     display: inline-block;
     vertical-align: middle;
