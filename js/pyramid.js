@@ -112,12 +112,7 @@ bar.append("text")
     .attr("text-anchor", "middle")
     .text(function(d) { return d.sharedLabel; });
 
-for (var i=0; i<data.length; i++) {
-    data[i].barData1 = Math.random() * dataRange;
-    data[i].barData2 = Math.random() * dataRange;
-  }
-	  
-
+	 
 
 refresh(data);
 
@@ -136,10 +131,18 @@ function refresh(data) {
   bars.selectAll("text.malebar")
       .text(function(d) { return commas(d.barData1); })
     .transition()
+	.delay(function (d, i) {
+        return i * 50;
+    })
+        .duration(1000)
       .attr("x", function(d) { return innerMargin + total(d.barData1); });
   bars.selectAll("text.femalebar")
       .text(function(d) { return commas(d.barData2); })
     .transition()
+	.delay(function (d, i) {
+        return i * 50;
+    })
+        .duration(1000)
       .attr("x", function(d) { return innerMargin - total(d.barData2) - 2 * labelSpace; });
    }
 }
@@ -148,12 +151,16 @@ PyramidVis.prototype.change = function(input){
 //pyget = function(input){
 
 data = this.data;
-alert("data");
+dataRange = d3.max(data.map(function(d) { return Math.max(d.barData1, d.barData2) }));
+for (var i=0; i<data.length; i++) {
+    data[i].barData1 = Math.random() * dataRange;
+    data[i].barData2 = Math.random() * dataRange;
+  }
+
 console.log(data);
 console.log(input);
 
 this.initiate(data);
 
-alert("yes");
 
 }
