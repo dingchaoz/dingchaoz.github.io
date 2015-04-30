@@ -118,7 +118,7 @@ function flt(value) {
   return value.YEAR == Number(_year) && value.AGEGRP == Number(_age);
   }
   else if (_year != null || _age != null) { 
-  return value.YEAR == 1 && value.AGEGRP == Number(_age);
+  return value.YEAR == Number(_year) && value.AGEGRP == 0;
   }
   else
   {

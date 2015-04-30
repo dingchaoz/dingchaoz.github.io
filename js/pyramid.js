@@ -12,6 +12,9 @@ PyramidVis = function(_parentElement, _data,_eventHandler){
 /* To do need to edit/input data */
 PyramidVis.prototype.initiate = function() {
 
+
+
+
 var data = this.data;
 /* edit these settings freely */  
 var w = 300,
@@ -152,15 +155,45 @@ PyramidVis.prototype.change = function(input){
 
 data = this.data;
 dataRange = d3.max(data.map(function(d) { return Math.max(d.barData1, d.barData2) }));
+debugger;
+
 for (var i=0; i<data.length; i++) {
-    data[i].barData1 = Math.random() * dataRange;
-    data[i].barData2 = Math.random() * dataRange;
+    var seed = Math.random();
+    data[i].barData1 = seed * dataRange;
+    data[i].barData2 = seed * dataRange;
   }
 
 console.log(data);
 console.log(input);
 
-this.initiate(data);
+total = d3.scale.linear().domain([0, dataRange]).range([0, 95 - 40]);
+commas = d3.format(",.0f");
 
+//this.initiate(data);
+var bars = d3.selectAll("g.bar")
+      .data(data);
+  bars.selectAll("rect.malebar")
+    .transition()
+      .attr("width", function(d) { return total(d.barData1); });
+  bars.selectAll("rect.femalebar")
+    .transition()
+      .attr("x", function(d) { return 190 - total(d.barData2) - 2 * 40; }) 
+      .attr("width", function(d) { return total(d.barData2); });
 
-}
+  bars.selectAll("text.malebar")
+      .text(function(d) { return commas(d.barData1); })
+    .transition()
+	.delay(function (d, i) {
+        return i * 50;
+    })
+        .duration(1000)
+      .attr("x", function(d) { return 190 + total(d.barData1); });
+  bars.selectAll("text.femalebar")
+      .text(function(d) { return commas(d.barData2); })
+    .transition()
+	.delay(function (d, i) {
+        return i * 50;
+    })
+        .duration(1000)
+      .attr("x", function(d) { return 190 - total(d.barData2) - 2 * 40; });
+   }
