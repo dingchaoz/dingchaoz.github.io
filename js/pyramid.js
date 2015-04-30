@@ -5,12 +5,14 @@ PyramidVis = function(_parentElement, _data,_eventHandler){
 
 	var data = this.data;
 
+	this.initiate(data);
 
-
+}
 
 /* To do need to edit/input data */
+PyramidVis.prototype.initiate = function() {
 
-
+var data = this.data;
 /* edit these settings freely */  
 var w = 300,
     h = 420,
@@ -110,15 +112,15 @@ bar.append("text")
     .attr("text-anchor", "middle")
     .text(function(d) { return d.sharedLabel; });
 
-d3.select("#generate").on("click", function() {
-  for (var i=0; i<data.length; i++) {
+for (var i=0; i<data.length; i++) {
     data[i].barData1 = Math.random() * dataRange;
     data[i].barData2 = Math.random() * dataRange;
   }
-  refresh(data);
-});
+	  
+
 
 refresh(data);
+
 
 function refresh(data) {
   var bars = d3.selectAll("g.bar")
@@ -139,5 +141,19 @@ function refresh(data) {
       .text(function(d) { return commas(d.barData2); })
     .transition()
       .attr("x", function(d) { return innerMargin - total(d.barData2) - 2 * labelSpace; });
+   }
 }
+
+PyramidVis.prototype.change = function(input){
+//pyget = function(input){
+
+data = this.data;
+alert("data");
+console.log(data);
+console.log(input);
+
+this.initiate(data);
+
+alert("yes");
+
 }

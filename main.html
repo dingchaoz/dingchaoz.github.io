@@ -94,26 +94,26 @@
 		<input type="checkbox" name="encode" value="IA" onchange="reactFunc()" >Native
       </label>
 	   </br>Filter by Age group: 
-      <select id = "dropdown" onchange="reactFunc()">
-           <option value="0" selected="selected">All ages</option>
-           <option value="1">0 to 4 years</option>
-           <option value="2">5 to 9 years</option>
-           <option value="3">10 to 14 years</option>
-		   <option value="4">15 to 19 years</option>	
-           <option value="5">20 to 24 years</option>
-           <option value="6">25 to 29 years</option>
-		   <option value="7">30 to 34 years</option>
-           <option value="8">35 to 39 years</option>
-           <option value="9">40 to 44 years</option>
-		   <option value="10">45 to 49 years</option>
-           <option value="11">50 to 54 years</option>
-           <option value="12">55 to 59 years</option>
-		   <option value="13">60 to 64 years</option>
-           <option value="14">65 to 69 years</option>
-           <option value="15">70 to 74 years</option>
-		   <option value="16">75 to 79 years</option>
-		   <option value="17">80 to 84 years</option>
-		   <option value="18">85 years or older</option>
+      <select>
+           <option value="volvo">All ages</option>
+           <option value="saab">0 to 4 years</option>
+           <option value="opel">5 to 9 years</option>
+           <option value="audi">10 to 14 years</option>
+		   <option value="saab">15 to 19 years</option>	
+           <option value="opel">20 to 24 years</option>
+           <option value="audi">25 to 29 years</option>
+		   <option value="saab">30 to 34 years</option>
+           <option value="opel">35 to 39 years</option>
+           <option value="audi">40 to 44 years</option>
+		   <option value="saab">45 to 49 years</option>
+           <option value="opel">50 to 54 years</option>
+           <option value="audi">55 to 59 years</option>
+		   <option value="saab">60 to 64 years</option>
+           <option value="opel">65 to 69 years</option>
+           <option value="audi">70 to 74 years</option>
+		   <option value="opel">75 to 79 years</option>
+		   <option value="audi">80 to 84 years</option>
+		   <option value="audi">85 years or older</option>
       </select>
 	  <br>
       Filter by gender:
@@ -170,26 +170,11 @@
             }
 			
 			
-			//check dropdown menu of age selection
-			
-			//document.getElementById("dropdown").onchange = function() {
-              //sAge = [];
-              //alert(this.value);
-			  //sAge.push(d3.select(this).attr("value"));
-              //input.age = sAge;
-			  //popmapall_vis.change(input);
-             //};
-
-			
-			
 			 // trigger map change based in filter and selection inputs
 			function reactFunc() {
 			
 			sRace = [];
 			sGender = [];
-			//sAge = [];
-			var sAge;
-			
 			
 			//check Filter button of race selection
             d3.selectAll("input").each(function(d) {  
@@ -214,24 +199,10 @@
             })
 			
 			
-			var sel = document.getElementById("dropdown");
-			//sAge.push(sel.options[sel.selectedIndex].value);
-			sAge = sel.options[sel.selectedIndex].value;
-			input.age = sAge;
-			
-			//check Filter button of gender selection
-            //d3.selectAll("option").each(function(d) {  
-              //if(d3.select(this).node().checked) {
-                 //sAge.push(d3.select(this).attr("value"));
-              //}
-			  
-			//input.age = sAge;
-			//popmapall_vis.change(input);
-			
-            //})
-			
 			
 		   popmapall_vis.change(input);
+		   //pyramid_vis.change(input);
+		   //pyget(input);
 
             }
 				
@@ -247,6 +218,7 @@
 			
 			// Pull out this vis outside of init function, so it can be access by other functions triggered by menu
 			var popmapall_vis;
+			var pyramid_vis;
 			
 
             // call this function after Data is loaded, reformatted and bound to the variables
@@ -261,7 +233,7 @@
 				debugger;
                var treemap_vis = new TreemapVis(d3.select("#treemapVis"), root, MyEventHandler);
                //var popmap_vis = new PopmapVis(d3.select("#popmapVis"), popmapData,us, MyEventHandler);
-               var pyramid_vis = new PyramidVis(d3.select("#pyramidVis"), pyramidData, MyEventHandler);
+               pyramid_vis = new PyramidVis(d3.select("#pyramidVis"), pyramidData, MyEventHandler);
 			   popmapall_vis = new PopmapallVis(d3.select("#popmapallVis"), allData,us, MyEventHandler);
 			   
 				// TODO: bind the eventHandler to the Vis Objects

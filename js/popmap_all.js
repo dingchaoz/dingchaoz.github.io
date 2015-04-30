@@ -67,8 +67,7 @@ this.year = _input.year;
 console.log(_input);
 this.race = _input.race;
 this.gender = _input.gender;
-this.age = _input.age;
-if(this.race != null && this.gender !=null && this.gender != "" && this.race != "" || this.year != null || this.age != null && this.age != "")
+if(this.race != null && this.gender !=null && this.gender != "" && this.race != "" || this.year != null)
 //if (this.race == null)
 {
   this.wrangleData(null);
@@ -85,8 +84,6 @@ _data = this.data;
 _year = this.year;
 _race = this.race;
 _gender = this.gender;
-_age = this.age;
-
 
 // reserverd for filter data	
 var seldata = [];
@@ -113,17 +110,14 @@ rateById = d3.map();
 
 // filter by year and age group first to get one record per county
 function flt(value) {
-  if(_year != null && _age != null) {
+  if(_year != null) {
   //return value.YEAR == Number(_year) && value.AGEGRP == 0;
-  return value.YEAR == Number(_year) && value.AGEGRP == Number(_age);
-  }
-  else if (_year != null || _age != null) { 
-  return value.YEAR == 1 && value.AGEGRP == Number(_age);
+  return value.YEAR == Number(_year) && value.AGEGRP == 0;
   }
   else
   {
   
-   return value.YEAR == 1 && value.AGEGRP == 0;
+   return value.YEAR == 5 && value.AGEGRP == 0;
    }
 
 }
@@ -309,6 +303,13 @@ PopmapallVis.prototype.updateVis = function(){
 	  //.attr("data-legend",function(d) { return quantize(rateById.get(d.id));});
   
   
+  for (i = 0; i < seldata.length; i ++) {
+  
+     if(seldata[i].id == "1001") {
+	    console.log(seldata[i].ctyname);
+		break;	 
+	 }
+  }
 
   // To do: to change the states class css attribute as a function, which takes eventhandler from treemap
   // when us.objects.states match in the us match with the state number in treemap, that state shows a different fill
