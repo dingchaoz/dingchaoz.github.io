@@ -259,7 +259,6 @@ this.quantize = d3.scale.quantize()
    
    
    
-   debugger;
    
 
 //d3.map(_data,function(d) { rateById.set(d.id, +d.rate); });

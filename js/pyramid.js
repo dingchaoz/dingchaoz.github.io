@@ -155,7 +155,7 @@ PyramidVis.prototype.change = function(input){
 
 data = this.data;
 dataRange = d3.max(data.map(function(d) { return Math.max(d.barData1, d.barData2) }));
-debugger;
+
 
 for (var i=0; i<data.length; i++) {
     var seed = Math.random();

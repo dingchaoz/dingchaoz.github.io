@@ -3,6 +3,18 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>US Census Visualization</title>
+ <link rel="shortcut icon" href="http://thumbs.dreamstime.com/x/people-icon-set-various-career-33054603.jpg">    
+  <!-- Bootstrap core CSS -->
+    <link href="http://s3.amazonaws.com/bf-site/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom Google Web Font -->
+    <link href="http://s3.amazonaws.com/bf-site/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic' rel='stylesheet' type='text/css'>
+
+    <!-- Add custom CSS here -->
+    <link href="http://s3.amazonaws.com/bf-site/css/landing-page.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Slab' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/bootswatch.min.css">
 
     <!-- ADD Libraries-->
      <!--<script src="libs/d3/d3.min.js" charset="utf-8"></script>-->
@@ -29,6 +41,27 @@
 
     <!-- Get some nice font-->
     <link href='http://fonts.googleapis.com/css?family=PT+Sans:400,700' rel='stylesheet' type='text/css'>
+	
+	  <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/">Century of Corn</a>
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="https://github.com/jbencook/cs171-ag-viz">Git Repository</a></li>
+            <li><a href="http://www.cs171.org">CS171</a></li>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
 
     <!--------------------------------->
@@ -36,7 +69,7 @@
     <!--------------------------------->
 
     <!-- add own vis classes-->
-    <script src="js/treemap_all.js"></script>
+    <script src="js/treemap.js"></script>
 	<script src = "js/pyramid.js"></script>
 	<script src = "js/popmap_all.js"></script>
 	<script src="/libs/legend.js"></script>
@@ -74,7 +107,7 @@
 <body>
     <div class="container">
 	    <div id="header">
-        <h1>US Census Visualization</h1>
+        <p>US Census Visualization</p>
 		</div>
 	<div class="row">
 	<div class="col-md-4" id="nav">
@@ -210,6 +243,7 @@
 			
 		   popmapall_vis.change(input);
 		   pyramid_vis.change(input);
+		   treemap_vis.change(input);
 		   //pyget(input);
 
             }
@@ -227,6 +261,7 @@
 			// Pull out this vis outside of init function, so it can be access by other functions triggered by menu
 			var popmapall_vis;
 			var pyramid_vis;
+			var treemap_vis;
 			
 
             // call this function after Data is loaded, reformatted and bound to the variables
@@ -239,7 +274,7 @@
                 //TODO: Instantiate all Vis Objects here
                 // instantiates all Vis Objects here
 				debugger;
-               var treemap_vis = new TreemapVis(d3.select("#treemapVis"), root, MyEventHandler);
+               treemap_vis = new TreemapVis(d3.select("#treemapVis"), root, MyEventHandler);
                //var popmap_vis = new PopmapVis(d3.select("#popmapVis"), popmapData,us, MyEventHandler);
                pyramid_vis = new PyramidVis(d3.select("#pyramidVis"), pyramidData, MyEventHandler);
 			   popmapall_vis = new PopmapallVis(d3.select("#popmapallVis"), allData,us, MyEventHandler);

@@ -1,6 +1,7 @@
 TreemapVis = function(_parentElement, _data,_eventHandler){
     this.parentElement = _parentElement;
     this.data = _data;
+	this.dataori = _data;
 	this.eventHandler = _eventHandler;
     //this.displayData = [];
      // TODO: define all "constants" here
@@ -11,13 +12,16 @@ TreemapVis = function(_parentElement, _data,_eventHandler){
 if(parent.document.getElementsByTagName("iframe")[0]) {
 	parent.document.getElementsByTagName("iframe")[0].setAttribute('style', 'height: 700px !important');
 }
- 
+TreemaploadData(_data);
+} 
+
 var margin = {top: 20, right: 0, bottom: 0, left: 0},
-    width = 750,
+
     height = 420 - margin.top - margin.bottom,
     formatNumber = d3.format(".2s"),
     transitioning;
- 
+
+var width = 750;
 /* create x and y scales */
 var x = d3.scale.linear()
 	.domain([0, width])
@@ -59,10 +63,14 @@ grandparent.append("text")
 	.attr("y", 6 - margin.top)
 	.attr("dy", ".75em");
 	
-TreemaploadData(_data);
+
+	
+
  //initialize(_data);
  
-function initialize(root) {
+ 
+//TreemapVis.prototype.initialize = function(root) {
+var initialize = function(root) {
 	root.x = root.y = 0;
 	root.dx = width;
 	root.dy = height;
@@ -72,7 +80,7 @@ function initialize(root) {
  
 // Aggregate the values for internal nodes. This is normally done by the
 // treemap layout, but not here because of the custom implementation.
-function accumulate(d) {
+var accumulate = function(d) {
 	return d.children
 	? d.value = d.children.reduce(function(p, v) { return p + accumulate(v); }, 0)
 	: d.value;
@@ -86,7 +94,7 @@ function accumulate(d) {
 // the parent’s dimensions are not discarded as we recurse. Since each group
 // of sibling was laid out in 1×1, we must rescale to fit using absolute
 // coordinates. This lets us use a viewport to zoom.
-function layout(d) {
+var layout = function(d) {
 	if (d.children) {
 	var bak = d.children.map(function(di) { return di.children});
 		treemap.nodes({children: d.children});
@@ -105,7 +113,7 @@ function layout(d) {
 }
  
 /* display shows the treemap and writes the embedded transition function */
-function display(d) {
+var display = function(d) {
 /* create grandparent bar at top */
 	grandparent
 		.datum(d.parent)
@@ -145,7 +153,8 @@ function display(d) {
 			}
 		})
 		.append("title")
-		.text(function(d) { return d.name + " " + formatNumber(d.size); }); /*should be d.value*/
+		//.text(function(d) { return d.name + " " + formatNumber(d.size); }); /*should be d.value*/
+		.text(function(d) { return d.name ; });
  
 	/* Adding a foreign object instead of a text object, allows for text wrapping */
 	g.append("foreignObject")
@@ -241,8 +250,10 @@ function loadJSONFile(file) {
 		loadData(root);
 	});
 }
+
+
  
-function TreemaploadData(root) {
+var TreemaploadData = function(root) {
 
 	initialize(root);
 	accumulate(root);
@@ -250,4 +261,27 @@ function TreemaploadData(root) {
 	display(root);
 }
 //}
+
+
+TreemapVis.prototype.change = function(input){
+dataori = this.dataori;
+console.log(dataori);
+dataori.value = 0;
+for (i = 0 ; i<dataori.children.length; i++) {
+seed = Math.random();
+  dataori.children[i].value = 0;
+  for (j = 0; j<dataori.children[i].children.length; j++) {
+    //var seed = Math.random();
+	dataori.children[i].children[j].value *= seed;
+    dataori.children[i].value += dataori.children[i].children[j].value;
+  }
+  dataori.value += dataori.children[i].value;
+}
+console.log(dataori);
+this.input = input;
+TreemaploadData(dataori);
+alert("input to treemap");
+
+
+
 }
