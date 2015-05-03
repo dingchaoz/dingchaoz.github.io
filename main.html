@@ -281,10 +281,15 @@
 			   
 				// TODO: bind the eventHandler to the Vis Objects
 				//$(MyEventHandler).bind("selectionChanged", function(event, startData, endDate){
-				//$(MyEventHandler).bind("selectionChanged", function(event, startDate,endDate){
+				$(MyEventHandler).bind("selectionChanged", function(event, passdata){
+				//$(MyEventHandler).bind("selectionChanged", function(event, a,b,c,d,e){
 				   // events will be consumed by the PrioVis and AgeVis object (binding should happen here)
-                   //age_vis.onSelectionChange(startDate, endDate);
-				   ////prio_vis.onSelectionChange(startDate, endDate);
+				   console.log(passdata);
+				   //alert("passdata");
+                   //pyramid_vis.onSelectionChange(passdata);
+				   pyramid_vis.onSelectionChange(passdata);
+				  }); 
+				  ////prio_vis.onSelectionChange(startDate, endDate);
 				   //var prio_visavg = new PrioVis_Avg(d3.select("#prioVis_avg"), allData, metaData, MyEventHandler);
 				   //prio_visavg.onSelectionChange(startDate, endDate);
                  //});

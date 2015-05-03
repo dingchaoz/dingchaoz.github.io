@@ -286,6 +286,7 @@ PopmapallVis.prototype.updateVis = function(){
   var width = this.width;
   var height = this.heigth;
   var path = this.path;
+  var handler = this.eventHandler;
   
   // remove old graph
   this.svg.selectAll("g").transition().duration(25).remove();
@@ -326,21 +327,21 @@ var node =  this.svg.append("g")
  
 var nod = this.svg;
 
-var keys = Object.keys(county_ids);
+//var keys = Object.keys(county_ids);
 
 //select counties
-    for(i=0; i<keys.length; i++){
-        key = keys[i];
+   // for(i=0; i<keys.length; i++){
+      //  key = keys[i];
         //var county = this.svg.select('#'+key);
-		county = this.svg.select('#'+key);
+		//county = this.svg.select('#'+key);
 
-        if (county[0][0] != null){
-            xpos.push(county[0][0].getAttribute('xpos'));
-            ypos.push(county[0][0].getAttribute('ypos'));
+       // if (county[0][0] != null){
+         //   xpos.push(county[0][0].getAttribute('xpos'));
+         //   ypos.push(county[0][0].getAttribute('ypos'));
             
 
-            }
-        }
+        //    }
+       // }
     //}
 
 
@@ -423,21 +424,20 @@ var keys = Object.keys(county_ids);
             var ypos = county[0][0].getAttribute('ypos');
             
            if(extent[0][0] <= xpos && xpos< extent[1][0] && extent[0][1] <= ypos && ypos < extent[1][1]){ 
-                selected_data.push(key);
+                //selected_data.push(key);
                 selected_counties.push(key.slice(1))
             }
         }
     }
-console.log(selected_counties);
-console.log(selected_data);
+//console.log(selected_counties);
+//console.log(selected_data);
+//$(this.eventHandler).trigger("selectionChanged", selected_counties);
+
+
+$(handler).trigger("selectionChanged", [selected_counties]);
+//$(handler).trigger("selectionChanged", [a,b,c,d,e]);
+//console.log(selected_counties);
 }));		
-        //.on("brush", function() {
-		  //var extent = d3.event.target.extent();
-		  //node.classed("selected", function(d) {
-            //return extent[0][0] <= d.x && d.x < extent[1][0]
-                //&& extent[0][1] <= d.y && d.y < extent[1][1];
-          //});
-		  //console.log(extent);
-        //}));
+    
 
 }

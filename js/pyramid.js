@@ -197,3 +197,12 @@ var bars = d3.selectAll("g.bar")
         .duration(1000)
       .attr("x", function(d) { return 190 - total(d.barData2) - 2 * 40; });
    }
+   
+PyramidVis.prototype.onSelectionChange = function (data){
+//PyramidVis.prototype.onSelectionChange = function (a,b,c,d,e){
+
+//console.log(a,b,c,d,e);
+console.log(data);
+//alert("pass data");
+
+}
