@@ -10,7 +10,7 @@ PopmapallVis = function(_parentElement, _data,_us,_eventHandler){
 
 PopmapallVis.prototype.initVis = function() {
 
-
+var that = this;
 // template http://bl.ocks.org/mbostock/4060606
 
 //function initVis (data,us,year) {
@@ -49,6 +49,12 @@ this.path = d3.geo.path()
 this.svg = d3.select("#popmapallVis").append("svg")
     .attr("width", width)
     .attr("height", height);
+	
+this.brush = d3.svg.brush()
+      .on("brush", function(){
+        $(that.eventHandler).trigger("selectionChanged", that.brush.extent());
+		console.log(that.brush.extent());
+      });
 	
 this.width = width;
 this.height = height;
@@ -284,8 +290,11 @@ PopmapallVis.prototype.updateVis = function(){
   // remove old graph
   this.svg.selectAll("g").transition().duration(25).remove();
 
+var county_ids = {};
+var xpos = [];
+var ypos = [];
   
-  this.svg.append("g")
+var node =  this.svg.append("g")
       .attr("class", "counties hvr-grow")
 	  .style("cursor", "pointer")	
     .selectAll("path")
@@ -294,6 +303,11 @@ PopmapallVis.prototype.updateVis = function(){
 	//.transition()
       .attr("fill", function(d) { return quantize(rateById.get(d.id)); })
       .attr("d", path)
+	  .attr('id', function(d,i){
+            county_ids[('c'+d.id)] = [];
+            return 'c'+d.id})
+	  .attr('xpos', function(d,i){return path.centroid(d)[0]})
+      .attr('ypos', function(d,i){return path.centroid(d)[1]})
 	  .append("title").text(function(d) {
 	       var fullname;
 	       for (i = 0; i < seldata.length; i ++) {
@@ -309,8 +323,29 @@ PopmapallVis.prototype.updateVis = function(){
 				});
 
 	  //.attr("data-legend",function(d) { return quantize(rateById.get(d.id));});
-  
-  
+ 
+var nod = this.svg;
+
+var keys = Object.keys(county_ids);
+
+//select counties
+    for(i=0; i<keys.length; i++){
+        key = keys[i];
+        //var county = this.svg.select('#'+key);
+		county = this.svg.select('#'+key);
+
+        if (county[0][0] != null){
+            xpos.push(county[0][0].getAttribute('xpos'));
+            ypos.push(county[0][0].getAttribute('ypos'));
+            
+
+            }
+        }
+    //}
+
+
+
+ 
   for (i = 0; i < seldata.length; i ++) {
   
      if(seldata[i].id == "1001") {
@@ -362,7 +397,47 @@ legend
     });
     
 
-
+//var nod = this.svg.select('.counties hvr-grow');
 
 d3.select(self.frameElement).style("height", height + "px");
+ var brush = this.svg.append("g")
+      .attr("class", "brush")
+      .call(d3.svg.brush()
+        .x(d3.scale.identity().domain([0, 860]))
+        .y(d3.scale.identity().domain([0, 420]))
+		.on('brush', function(){
+
+var extent = d3.event.target.extent();
+selected_data = [];
+selected_counties = [];
+var keys = Object.keys(county_ids);
+
+//select counties
+    for(i=0; i<keys.length; i++){
+        var key = keys[i];
+        //var county = this.svg.select('#'+key);
+		var county = nod.select('#'+key);
+
+        if (county[0][0] != null){
+            var xpos = county[0][0].getAttribute('xpos');
+            var ypos = county[0][0].getAttribute('ypos');
+            
+           if(extent[0][0] <= xpos && xpos< extent[1][0] && extent[0][1] <= ypos && ypos < extent[1][1]){ 
+                selected_data.push(key);
+                selected_counties.push(key.slice(1))
+            }
+        }
+    }
+console.log(selected_counties);
+console.log(selected_data);
+}));		
+        //.on("brush", function() {
+		  //var extent = d3.event.target.extent();
+		  //node.classed("selected", function(d) {
+            //return extent[0][0] <= d.x && d.x < extent[1][0]
+                //&& extent[0][1] <= d.y && d.y < extent[1][1];
+          //});
+		  //console.log(extent);
+        //}));
+
 }
