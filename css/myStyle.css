@@ -160,8 +160,8 @@ padding: 5px;
     pointer-events: none;
 }
 .brush .extent {
-      stroke: #fff;
-      
+      stroke: red;
+      stroke-width: 4;
       background: gray;
       shape-rendering: crispEdges;
     }
