@@ -161,3 +161,36 @@ padding: 5px;
    stroke: red;
 
 }
+.axis text {
+    font: 10px sans-serif;
+}
+
+.axis line,
+.axis path {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+svg {
+      font: 10px sans-serif;
+      width: 100%;
+    }
+	
+.bar {
+      cursor: pointer;
+    }
+	
+.bar rect {
+      fill: steelblue;
+    }
+.line {
+      fill: none;
+      stroke: steelblue;
+      stroke-width: 0.5px;
+    }
+	
+.area {
+      fill: steelblue;
+      opacity: 1;
+      clip-path: url(#clip);
+    }

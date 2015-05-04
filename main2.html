@@ -27,6 +27,7 @@
 	<script src="http://d3js.org/topojson.v1.min.js"></script>
 	<!-- <script src="http://d3js.org/d3.v3.min.js"></script>-->
 	<script src="http://d3js.org/d3.v3.js"></script>
+	<script src="libs/d3/d3.min.js" charset="utf-8"></script>
 
    
     <script src="/d3-geomap/vendor/d3.geomap.dependencies.min.js"></script>
@@ -70,7 +71,7 @@
 
     <!-- add own vis classes-->
     <script src="js/treemap.js"></script>
-	<script src = "js/pyramid.js"></script>
+	<script src = "js/priovis.js"></script>
 	<script src = "js/popmap_all.js"></script>
 	<script src="/libs/legend.js"></script>
     <script src="/libs/colorbrewer.js"></script>
@@ -164,7 +165,7 @@
 	   
 	   <div class="row">
 	   
-       <div class="col-md-4" id="pyramidVis">
+       <div class="col-md-4" id="prioVis">
 
        </div>
 
@@ -199,7 +200,7 @@
                
 			   input.year = value;
 			   popmapall_vis.change(input);
-			   pyramid_vis.change(input);
+			   //pyramid_vis.change(input);
 
             }
 			
@@ -242,7 +243,7 @@
 			
 			
 		   popmapall_vis.change(input);
-		   pyramid_vis.change(input);
+		   //pyramid_vis.change(input);
 		   treemap_vis.change(input);
 		   //pyget(input);
 
@@ -251,7 +252,7 @@
             // variables keeping global knowledge of the data
             var treemapData = [];
             //var popmapData = [];
-			var pyramidData = [];
+			//var pyramidData = [];
 			var us = [];
 			var allData = [];
 			
@@ -260,7 +261,7 @@
 			
 			// Pull out this vis outside of init function, so it can be access by other functions triggered by menu
 			var popmapall_vis;
-			var pyramid_vis;
+			var prio_vis;
 			var treemap_vis;
 			
 
@@ -276,15 +277,20 @@
 				debugger;
                treemap_vis = new TreemapVis(d3.select("#treemapVis"), root, MyEventHandler);
                //var popmap_vis = new PopmapVis(d3.select("#popmapVis"), popmapData,us, MyEventHandler);
-               pyramid_vis = new PyramidVis(d3.select("#pyramidVis"), pyramidData, MyEventHandler);
+               prio_vis = new PrioVis(d3.select("#prioVis"),allData, MyEventHandler);
 			   popmapall_vis = new PopmapallVis(d3.select("#popmapallVis"), allData,us, MyEventHandler);
 			   
 				// TODO: bind the eventHandler to the Vis Objects
 				//$(MyEventHandler).bind("selectionChanged", function(event, startData, endDate){
-				//$(MyEventHandler).bind("selectionChanged", function(event, startDate,endDate){
+				$(MyEventHandler).bind("selectionChanged", function(event, passdata){
+				//$(MyEventHandler).bind("selectionChanged", function(event, a,b,c,d,e){
 				   // events will be consumed by the PrioVis and AgeVis object (binding should happen here)
-                   //age_vis.onSelectionChange(startDate, endDate);
-				   ////prio_vis.onSelectionChange(startDate, endDate);
+				   //console.log(passdata);
+				   //alert("passdata");
+                   //pyramid_vis.onSelectionChange(passdata);
+				   prio_vis.onSelectionChange(passdata);
+				  }); 
+				  ////prio_vis.onSelectionChange(startDate, endDate);
 				   //var prio_visavg = new PrioVis_Avg(d3.select("#prioVis_avg"), allData, metaData, MyEventHandler);
 				   //prio_visavg.onSelectionChange(startDate, endDate);
                  //});
@@ -293,7 +299,7 @@
             }
 
             // call this function after both files are loaded -- error should be "null" if no error
-            var dataLoaded = function (error, _treemapData,_pyramidData,_us,_allData) {
+            var dataLoaded = function (error, _treemapData,_us,_allData) {
 
                 if (!error) {
 
@@ -331,15 +337,15 @@
                     *  Wrangle Pyramid Data
                     *
                     * */
-					_pyramidData.forEach(function (d) {
+					//_pyramidData.forEach(function (d) {
 					 
-                                pyramidData.push ({
-                                    sharedLabel: d.Location ,
-                                    barData1: d.Female ,
-									barData2: d.Male
-                                });
+                                //pyramidData.push ({
+                                    //sharedLabel: d.Location ,
+                                    //barData1: d.Female ,
+									//barData2: d.Male
+                                //});
      
-                          })
+                          //})
 
 					// 
                     // 
@@ -368,7 +374,7 @@
 		        queue()	
                   .defer(d3.csv, "data/racetreemap.csv")
                   //.defer(d3.csv, "data/est08ALL.csv")
-				  .defer(d3.csv,"data/raw_genderbystate2013.csv")
+				  //.defer(d3.csv,"data/raw_genderbystate2013.csv")
 				  .defer(d3.json, "/js/us-10m.json")
 				  .defer(d3.csv, "/data/alldata.csv")
 				  .await(dataLoaded);
@@ -376,7 +382,7 @@
 
                 //TODO: load data here and call "dataLoaded" afterwards
                 // Hint: http://giscollective.org/d3-queue-js/
-				dataLoaded(treemapData,pyramidData,us,allData);
+				dataLoaded(treemapData,us,allData);
 				//initVis();
 
             }
