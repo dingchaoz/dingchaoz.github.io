@@ -91,25 +91,13 @@
     line-height:30px;
 
 }
-    body {
-      width: 800px;
-      margin: 25px auto;
-      font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    }
-    rect {
-        fill-opacity: 0.8;
-    }
-    rect:hover {
-        fill-opacity: 1;
-    }
+   
   </style>
 
 </head>
 <body>
     <div class="container">
-	    <div id="header">
-        <h3>US Census Visualization</h3>
-		</div>
+	   
 	<div class="row">
 	<div class="col-md-4" id="nav">
            
@@ -127,6 +115,7 @@
 		<input type="checkbox" name="encode" value="AA" onchange="reactFunc()" >Asian
 		<input type="checkbox" name="encode" value="IA" onchange="reactFunc()" >Native
       </label>
+	  <br>
 	   </br>Filter by Age group: 
       <select id = "dropdown" onchange="reactFunc()">
            <option value="0" selected="selected">All ages</option>
@@ -150,12 +139,17 @@
 		   <option value="18">85 years or older</option>
       </select>
 	  <br>
+	  <br>
       Filter by gender:
       <label>
         <input type="checkbox" name="gender" value="MALE" title="Male"  onchange="reactFunc()">Male
         <input type="checkbox" name="gender" value="FEMALE" title="Female" onchange="reactFunc()" checked="checked" > Female
       </label>
       </br>
+	  <br>
+	   <div id="header">
+        <p>US Census Visualization</p>
+		</div>
 		 </div>
        
             <div class="col-md-8" id="popmapallVis">

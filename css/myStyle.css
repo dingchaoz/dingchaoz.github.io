@@ -1,6 +1,14 @@
+.container {
+    position: relative;
+    right: 300px;
+    width: 1200px;
+    
+}
+
+
 body {
-      width: 800px;
-      margin: 25px auto;
+      width: 600px;
+      margin: 10px auto;
       font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     }
     

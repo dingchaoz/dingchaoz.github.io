@@ -15,7 +15,7 @@ PrioVis = function(_parentElement, _data,_eventHandler){
     this.margin = {top: 20, right: 20, bottom: 70, left: 20},
     //this.width = getInnerWidth(this.parentElement) - this.margin.left - this.margin.right,
 	this.width = 400 - this.margin.left - this.margin.right,
-    this.height = 500 - this.margin.top - this.margin.bottom;
+    this.height = 415 - this.margin.top - this.margin.bottom;
 
     this.initVis();
 

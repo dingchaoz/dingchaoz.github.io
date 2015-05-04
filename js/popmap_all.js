@@ -372,7 +372,7 @@ var nod = this.svg;
 
 legend
     .append('rect')
-    .attr("x", width - 160)
+    .attr("x", width - 190)
     .attr("y", function(d, i) {
        return i * 20 + 301.5;
     })
@@ -385,7 +385,7 @@ legend
 
 legend
     .append('text')
-    .attr("x", width - 145) //leave 5 pixel space after the <rect>
+    .attr("x", width - 175) //leave 5 pixel space after the <rect>
     .attr("y", function(d, i) {
        return i * 20 + 300;
     })
