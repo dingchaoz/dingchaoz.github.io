@@ -290,6 +290,7 @@ PopmapallVis.prototype.updateVis = function(){
   
   // remove old graph
   this.svg.selectAll("g").transition().duration(25).remove();
+  this.svg.selectAll('g.legendEntry').remove();
 
 var county_ids = {};
 var xpos = [];

@@ -14,7 +14,7 @@ PrioVis = function(_parentElement, _data,_eventHandler){
     // defines constants
     this.margin = {top: 20, right: 20, bottom: 70, left: 20},
     //this.width = getInnerWidth(this.parentElement) - this.margin.left - this.margin.right,
-	this.width = 400 - this.margin.left - this.margin.right,
+	this.width = 410 - this.margin.left - this.margin.right,
     this.height = 415 - this.margin.top - this.margin.bottom;
 
     this.initVis();
@@ -36,13 +36,15 @@ PrioVis.prototype.initVis = function(){
 
     // creates axis and scales
     this.x = d3.scale.ordinal()
-	    .rangeRoundBands([0, this.width], .1);
+	    .rangeRoundBands([0, this.width], 15);
 
     this.y = d3.scale.linear()
 	     .range([0,this.height]);
       
 
-    this.color = d3.scale.category20();
+    //this.color = d3.scale.category10();
+	this.color = d3.scale.linear()
+	             .range(["purple","steelblue","orange","green","red"]);
 
     this.xAxis = d3.svg.axis()
       .scale(this.x)
@@ -147,6 +149,8 @@ function flt(value) {
 	HM = 0;
 	NM = 0;
 	NF = 0;
+	
+	divider = flter.length;
 	// now select different race's population and push into display data;
 	flter.forEach(function (d) {
 	
@@ -169,11 +173,11 @@ function flt(value) {
 	if (isNaN(AF)) {
 	  //seed = Math.floor(Math.random()*0.8) + 1;
 	  
-	  seldata.push(22,23,600,700,60,65,70,75,20,25);
+	  seldata.push(22/divider,23/divider,600/divider,700/divider,60/divider,65/divider,70/divider,75/divider,20/divider,25/divider);
 	  seldata.map(function(d){return d * ((Math.random()*0.8) + 1.2);});
 	}
 	else {
-	  seldata.push(AF,AM,WF,WM,HF,HM,BF,BM,NF,NM);
+	  seldata.push(AF/divider,AM/divider,WF/divider,WM/divider,HF/divider,HM/divider,BF/divider,BM/divider,NF/divider,NM/divider);
 	}
 	
 	console.log(seldata);
@@ -197,25 +201,33 @@ PrioVis.prototype.updateVis = function(){
 
     var that = this;
 	
-	//this.x.domain([0,this.displayData.prio]);
-	this.x.domain([0,10]);
+	this.displayData.prio = ["Asian","White","Hispanic","Black","Native"];
+	//this.displayData.prio = ["Asian  ","White  ","Hispanic  ","Black  ","Native  "];
+	
+	this.x.domain([0,this.displayData.prio]);
+	//this.x.domain([0,10]);
 	this.y.domain([0,Math.max.apply(null,this.displayData)]);
-	this.color.domain([0,this.displayData.length]);
+	//this.y.domain([0,Math.log(Math.max.apply(null,this.displayData)*1000)]);
+	//this.color.domain([0,(this.displayData.length/2)]);
+	this.color.domain([1,2,3,4,5]);
 	//this.color.domain(this.displayData.map(function(d,i) { return i }));
 
     // updates axis
-    this.svg.select(".x.axis")
-        .call(this.xAxis);
+    //this.svg.select(".x.axis")
+        //.call(this.xAxis);
+		//.attr("transform", "translate(0,0)");
     
 		
-	this.svg.select(".y.axis")
-        .call(that.yAxis);
+	//this.svg.select(".y.axis")
+        //.call(that.yAxis);
 
     // updates graph
 	this.svg.selectAll(".bar").remove();
 	this.svg.selectAll("rect").remove();
+	this.svg.selectAll("text").remove();
+	this.svg.selectAll('g.legendEntry').remove();
 	
-	var band_width = this.width/11;
+	var band_width = this.width/16;
 
     // Data join
     var bar = this.svg.selectAll(".bar");
@@ -232,20 +244,105 @@ PrioVis.prototype.updateVis = function(){
 	  })
 	
 	  .attr("x", function(d,i){
-	   return i * band_width;
+	  
+	    if(i%2 == 0) {
+	     return i * band_width + (i)*15;
+		 }
+		 else {
+		  return i * band_width + (i-1)*15;
+		 }
 	   console.log(i);
 	})
 	  .attr("width", band_width)
       .style("fill", function(d,i) {
   
-		return that.color(i);
+		return that.color(Math.ceil((i+0.5)/2));
 		console.log(i);
       })
       .transition()
+	  .style("stroke", function(d, i){  
+	    if (i%2 == 0) { return "black" ;}
+		else {return "red" ;}
+	  
+	  })
       .attr("height", function(d, i) {
 		  return (that.y(d));
 		  console.log(d);;
       });
+	  
+	  //append label to bar
+	  this.svg.selectAll("text")
+          .data(this.displayData)
+          .enter()
+          .append("text")
+		  .text(function(d) {
+               return (d*100).toPrecision(2) + "%";
+            })
+		  .attr("x", function(d,i){
+		  
+		  if (i == 0) {return 8};
+		  if (i == 1) {return 45};
+		  if (i == 2) {return 85};
+		  if (i == 3) {return 115};
+		  if (i == 4) {return 160};
+		  if (i == 5) {return 190};
+		  if (i == 6) {return 240};
+		  if (i == 7) {return 270};
+		  if (i == 8) {return 300};
+		  if (i == 9) {return 333};
+	
+		  
+	   })
+	   .attr("y",function(d) {return that.height - that.y(d);
+	  
+	   })
+	   .attr("font-family", "sans-serif")
+       .attr("font-size", "8px")
+	   .attr("text-anchor", "middle");
+       //.attr("fill", "white");
+	   
+	var leg =   ["purple", "steelblue", "orange", "green", "red","white","white"] 
+	   
+	   	  
+  var legend = this.svg.selectAll('g.legendEntry')
+    //.data(this.color.range())
+	.data(leg)
+    .enter()
+    .append('g').attr('class', 'legendEntry');
+
+legend
+    .append('rect')
+    .attr("x", this.width - 82)
+    .attr("y", function(d, i) {
+       return i * 20 + 11.5;
+    })
+   .attr("width", 10)
+   .attr("height", 10)
+   .style("stroke", function(d, i){  
+	    if (i == 5) { return "red" ;}
+		if (i == 6) { return "black" ;}
+	  
+	  })
+   .style("stroke-width", 1)
+   .style("fill", function(d){return d;}); 
+       //the data objects are the fill colors
+
+legend
+    .append('text')
+    .attr("x", this.width - 67) //leave 5 pixel space after the <rect>
+    .attr("y", function(d, i) {
+       return i * 20 + 10;
+    })
+    .attr("dy", "0.8em") //place text one line *below* the x,y point
+    .text(function(d,i) {
+          if (i == 0) {return "Asian"};
+		  if (i == 1) {return "White"};
+		  if (i == 2) {return "Hispanic"};
+		  if (i == 3) {return "Black"};
+		  if (i == 4) {return "Native"};
+		  if (i == 5) {return "Female"};
+		  if (i == 6) {return "Male"};
+    });
 	  
 
 }

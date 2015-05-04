@@ -27,7 +27,6 @@
 	<script src="http://d3js.org/topojson.v1.min.js"></script>
 	<!-- <script src="http://d3js.org/d3.v3.min.js"></script>-->
 	<script src="http://d3js.org/d3.v3.js"></script>
-	<script src="libs/d3/d3.min.js" charset="utf-8"></script>
 
    
     <script src="/d3-geomap/vendor/d3.geomap.dependencies.min.js"></script>
@@ -71,7 +70,7 @@
 
     <!-- add own vis classes-->
     <script src="js/treemap.js"></script>
-	<script src = "js/priovis.js"></script>
+	<script src = "js/pyramid.js"></script>
 	<script src = "js/popmap_all.js"></script>
 	<script src="/libs/legend.js"></script>
     <script src="/libs/colorbrewer.js"></script>
@@ -91,15 +90,27 @@
     line-height:30px;
 
 }
-   
+    body {
+      width: 800px;
+      margin: 25px auto;
+      font-family: "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    }
+    rect {
+        fill-opacity: 0.8;
+    }
+    rect:hover {
+        fill-opacity: 1;
+    }
   </style>
 
 </head>
 <body>
     <div class="container">
-	   
+	    <div id="header">
+        <h3>US Census Visualization</h3>
+		</div>
 	<div class="row">
-	<div class="col-md-4" id="nav" style= "background-color: #AAAA99;">
+	<div class="col-md-4" id="nav">
            
 		
 	  Year Selected: 	  <span id="range">2008</span>
@@ -115,7 +126,6 @@
 		<input type="checkbox" name="encode" value="AA" onchange="reactFunc()" >Asian
 		<input type="checkbox" name="encode" value="IA" onchange="reactFunc()" >Native
       </label>
-	  <br>
 	   </br>Filter by Age group: 
       <select id = "dropdown" onchange="reactFunc()">
            <option value="0" selected="selected">All ages</option>
@@ -139,18 +149,12 @@
 		   <option value="18">85 years or older</option>
       </select>
 	  <br>
-	  <br>
       Filter by gender:
       <label>
         <input type="checkbox" name="gender" value="MALE" title="Male"  onchange="reactFunc()">Male
         <input type="checkbox" name="gender" value="FEMALE" title="Female" onchange="reactFunc()" checked="checked" > Female
       </label>
       </br>
-	  <br>
-	   <div id="header">
-      <p>Click the <b>'Play'</b> button to see the population BMI changes from 1995 to 2011.To explore changes between any given 2 years, click on the year on the timeline.</p>
-      <p>This visualization is created  using data from  <a href="http://www.census.gov">United States Census Bureau</a>.</p>
-      </div>
 		 </div>
        
             <div class="col-md-8" id="popmapallVis">
@@ -160,7 +164,7 @@
 	   
 	   <div class="row">
 	   
-       <div class="col-md-4" id="prioVis">
+       <div class="col-md-4" id="pyramidVis">
 
        </div>
 
@@ -195,7 +199,7 @@
                
 			   input.year = value;
 			   popmapall_vis.change(input);
-			   prio_vis.change(input);
+			   pyramid_vis.change(input);
 
             }
 			
@@ -238,8 +242,8 @@
 			
 			
 		   popmapall_vis.change(input);
-		   //pyramid_vis.change(input);
-		   prio_vis.change(input);
+		   pyramid_vis.change(input);
+		   treemap_vis.change(input);
 		   //pyget(input);
 
             }
@@ -247,7 +251,7 @@
             // variables keeping global knowledge of the data
             var treemapData = [];
             //var popmapData = [];
-			//var pyramidData = [];
+			var pyramidData = [];
 			var us = [];
 			var allData = [];
 			
@@ -256,7 +260,7 @@
 			
 			// Pull out this vis outside of init function, so it can be access by other functions triggered by menu
 			var popmapall_vis;
-			var prio_vis;
+			var pyramid_vis;
 			var treemap_vis;
 			
 
@@ -272,7 +276,7 @@
 				debugger;
                treemap_vis = new TreemapVis(d3.select("#treemapVis"), root, MyEventHandler);
                //var popmap_vis = new PopmapVis(d3.select("#popmapVis"), popmapData,us, MyEventHandler);
-               prio_vis = new PrioVis(d3.select("#prioVis"),allData, MyEventHandler);
+               pyramid_vis = new PyramidVis(d3.select("#pyramidVis"), pyramidData, MyEventHandler);
 			   popmapall_vis = new PopmapallVis(d3.select("#popmapallVis"), allData,us, MyEventHandler);
 			   
 				// TODO: bind the eventHandler to the Vis Objects
@@ -280,10 +284,10 @@
 				$(MyEventHandler).bind("selectionChanged", function(event, passdata){
 				//$(MyEventHandler).bind("selectionChanged", function(event, a,b,c,d,e){
 				   // events will be consumed by the PrioVis and AgeVis object (binding should happen here)
-				   //console.log(passdata);
+				   console.log(passdata);
 				   //alert("passdata");
                    //pyramid_vis.onSelectionChange(passdata);
-				   prio_vis.onSelectionChange(passdata);
+				   pyramid_vis.onSelectionChange(passdata);
 				  }); 
 				  ////prio_vis.onSelectionChange(startDate, endDate);
 				   //var prio_visavg = new PrioVis_Avg(d3.select("#prioVis_avg"), allData, metaData, MyEventHandler);
@@ -294,7 +298,7 @@
             }
 
             // call this function after both files are loaded -- error should be "null" if no error
-            var dataLoaded = function (error, _treemapData,_us,_allData) {
+            var dataLoaded = function (error, _treemapData,_pyramidData,_us,_allData) {
 
                 if (!error) {
 
@@ -332,15 +336,15 @@
                     *  Wrangle Pyramid Data
                     *
                     * */
-					//_pyramidData.forEach(function (d) {
+					_pyramidData.forEach(function (d) {
 					 
-                                //pyramidData.push ({
-                                    //sharedLabel: d.Location ,
-                                    //barData1: d.Female ,
-									//barData2: d.Male
-                                //});
+                                pyramidData.push ({
+                                    sharedLabel: d.Location ,
+                                    barData1: d.Female ,
+									barData2: d.Male
+                                });
      
-                          //})
+                          })
 
 					// 
                     // 
@@ -369,7 +373,7 @@
 		        queue()	
                   .defer(d3.csv, "data/racetreemap.csv")
                   //.defer(d3.csv, "data/est08ALL.csv")
-				  //.defer(d3.csv,"data/raw_genderbystate2013.csv")
+				  .defer(d3.csv,"data/raw_genderbystate2013.csv")
 				  .defer(d3.json, "/js/us-10m.json")
 				  .defer(d3.csv, "/data/alldata.csv")
 				  .await(dataLoaded);
@@ -377,7 +381,7 @@
 
                 //TODO: load data here and call "dataLoaded" afterwards
                 // Hint: http://giscollective.org/d3-queue-js/
-				dataLoaded(treemapData,us,allData);
+				dataLoaded(treemapData,pyramidData,us,allData);
 				//initVis();
 
             }
