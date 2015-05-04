@@ -102,12 +102,11 @@
 	<div class="col-md-4" id="nav" style= "background-color: #AAAA99;">
            
 		
-	  Year Selected: 	  <span id="range">2008</span>
-      <br>	  
+	  Year Selected: 	  <span id="range">2008</span>	  
       <!--<label id="ymin" value="">2008</label>-->
       <input type="range" name="points" min="1" max="6" step="1" value="1" id="slider-time" oninput="rangechanged(this.value)" onchange="showValue(this.value)">
         <!--<label id="ymax" value="">2013</label>-->
-      </br>Ethnic group by:
+Ethnic group by:
       <label>
         <input type="checkbox" name="encode" value="WA" onchange="reactFunc()" checked="checked" >White
 		<input type="checkbox" name="encode" value="BA" onchange="reactFunc()" >Black
@@ -115,8 +114,8 @@
 		<input type="checkbox" name="encode" value="AA" onchange="reactFunc()" >Asian
 		<input type="checkbox" name="encode" value="IA" onchange="reactFunc()" >Native
       </label>
-	  <br>
-	   </br>Filter by Age group: 
+
+Filter by Age group: 
       <select id = "dropdown" onchange="reactFunc()">
            <option value="0" selected="selected">All ages</option>
            <option value="1">0 to 4 years</option>
@@ -138,18 +137,16 @@
 		   <option value="17">80 to 84 years</option>
 		   <option value="18">85 years or older</option>
       </select>
-	  <br>
-	  <br>
+      <br>
       Filter by gender:
       <label>
         <input type="checkbox" name="gender" value="MALE" title="Male"  onchange="reactFunc()">Male
         <input type="checkbox" name="gender" value="FEMALE" title="Female" onchange="reactFunc()" checked="checked" > Female
       </label>
-      </br>
-	  <br>
+
 	   <div id="header">
-      <p>To explore United States population demographics changes from 2008 to 2013, use above interactive menu or brush window in the choropleth map.</p>
-      <p>This visualization is created  using data released from  <a href="http://www.census.gov/popest/data/counties/asrh/2013/CC-EST2013-ALLDATA.html
+      <p>To explore United States population demographics changes from 2008 to 2013, use above interactive menu or brush window in the choropleth map.
+      This visualization is created  using data released from  <a href="http://www.census.gov/popest/data/counties/asrh/2013/CC-EST2013-ALLDATA.html
 ">United States Census Bureau</a>.</p>
       </div>
 		 </div>
