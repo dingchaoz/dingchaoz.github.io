@@ -327,22 +327,7 @@ var node =  this.svg.append("g")
  
 var nod = this.svg;
 
-//var keys = Object.keys(county_ids);
 
-//select counties
-   // for(i=0; i<keys.length; i++){
-      //  key = keys[i];
-        //var county = this.svg.select('#'+key);
-		//county = this.svg.select('#'+key);
-
-       // if (county[0][0] != null){
-         //   xpos.push(county[0][0].getAttribute('xpos'));
-         //   ypos.push(county[0][0].getAttribute('ypos'));
-            
-
-        //    }
-       // }
-    //}
 
 
 
@@ -406,7 +391,8 @@ d3.select(self.frameElement).style("height", height + "px");
       .call(d3.svg.brush()
         .x(d3.scale.identity().domain([0, 860]))
         .y(d3.scale.identity().domain([0, 420]))
-		.on('brush', function(){
+		//.style("pointer-events", "none")
+		.on('brushend', function(){
 
 var extent = d3.event.target.extent();
 selected_data = [];
@@ -425,7 +411,8 @@ var keys = Object.keys(county_ids);
             
            if(extent[0][0] <= xpos && xpos< extent[1][0] && extent[0][1] <= ypos && ypos < extent[1][1]){ 
                 //selected_data.push(key);
-                selected_counties.push(key.slice(1))
+                selected_counties.push(key.slice(1));
+				node.classed("selected");
             }
         }
     }

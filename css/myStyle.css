@@ -155,18 +155,17 @@ padding: 5px;
 }
 .brush{
     fill: darkgrey;
-    fill-opacity: .5;
+    
+    background: gray;
     pointer-events: none;
 }
 .brush .extent {
       stroke: #fff;
-      fill-opacity: .125;
+      
+      background: gray;
       shape-rendering: crispEdges;
     }
 
-
-.node .selected {
-   stroke: red;
 
 }
 .axis text {
