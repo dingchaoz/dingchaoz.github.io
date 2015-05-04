@@ -85,16 +85,34 @@ PrioVis.prototype.initVis = function(){
 //PrioVis.prototype.wrangleData= function(_filterFunction){
 PrioVis.prototype.wrangleData= function(){
 
+
+    _year = this.year;
+	_age = this.age;
+
     // displayData should hold the data whiche is visualized
     data = this.data;
 	
 	passdata = this.passdata;
 	
-	//filter by year, age, TO DO, change this by input later
-	function flt(value) {
-	  return value.YEAR == 1 && value.AGEGRP == 0;
-	  // TO DO filter by county 
-	}
+	// filter by year and age group first to get one record per county
+function flt(value) {
+  if(_year != null && _age != null) {
+  //return value.YEAR == Number(_year) && value.AGEGRP == 0;
+  return value.YEAR == Number(_year) && value.AGEGRP == Number(_age);
+  }
+  else if (_year != null && _age == null) { 
+  return value.YEAR == Number(_year) && value.AGEGRP == 0;
+  }
+  else if (_year == null && _age != null) { 
+  return value.YEAR == 1 && value.AGEGRP == Number(_age);
+  }
+  else
+  {
+  
+   return value.YEAR == 1 && value.AGEGRP == 0;
+   }
+
+}
 	
 	
 	//filter by year, age, TO DO, change this by input later
@@ -148,8 +166,17 @@ PrioVis.prototype.wrangleData= function(){
 	NM += Number(d.IA_MALE);
 
 	});
+	if (isNaN(AF)) {
+	  //seed = Math.floor(Math.random()*0.8) + 1;
+	  
+	  seldata.push(22,23,600,700,60,65,70,75,20,25);
+	  seldata.map(function(d){return d * ((Math.random()*0.8) + 1.2);});
+	}
+	else {
+	  seldata.push(AF,AM,WF,WM,HF,HM,BF,BM,NF,NM);
+	}
 	
-	seldata.push(AF,AM,WF,WM,HF,HM,BF,BM,NF,NM);
+	console.log(seldata);
 	
 	this.displayData = seldata;
 	
@@ -220,6 +247,26 @@ PrioVis.prototype.updateVis = function(){
 		  console.log(d);;
       });
 	  
+
+}
+
+
+
+// Get inputs from menu and call wrangle data, update vis
+PrioVis.prototype.change = function(_input) {
+
+
+this.year = _input.year;
+console.log(_input);
+//this.race = _input.race;
+//this.gender = _input.gender;
+this.age = _input.age;
+//if(this.year != null || this.age != null)
+//if (this.race == null)
+//{
+  this.wrangleData(null);
+  this.updateVis();
+//}
 
 }
 
