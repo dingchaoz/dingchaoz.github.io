@@ -180,7 +180,7 @@ function flt(value) {
 	  seldata.push(AF/divider,AM/divider,WF/divider,WM/divider,HF/divider,HM/divider,BF/divider,BM/divider,NF/divider,NM/divider);
 	}
 	
-	console.log(seldata);
+	//console.log(seldata);
 	
 	this.displayData = seldata;
 	

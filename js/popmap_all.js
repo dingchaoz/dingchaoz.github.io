@@ -336,7 +336,7 @@ var nod = this.svg;
   for (i = 0; i < seldata.length; i ++) {
   
      if(seldata[i].id == "1001") {
-	    console.log(seldata[i].ctyname);
+	    //console.log(seldata[i].ctyname);
 		break;	 
 	 }
   }
