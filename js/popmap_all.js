@@ -8,6 +8,15 @@ PopmapallVis = function(_parentElement, _data,_us,_eventHandler){
     this.initVis();
 }
 
+PopmapallVis.prototype.mouseBehav = function(value) {
+
+this.mouseb = value;
+this.updateVis();
+
+
+}
+
+
 PopmapallVis.prototype.initVis = function() {
 
 var that = this;
@@ -387,6 +396,8 @@ legend
 //var nod = this.svg.select('.counties hvr-grow');
 
 d3.select(self.frameElement).style("height", height + "px");
+
+if(this.mouseb == "brush") {
  var brush = this.svg.append("g")
       .attr("class", "brush")
       .call(d3.svg.brush()
@@ -425,7 +436,7 @@ var keys = Object.keys(county_ids);
 $(handler).trigger("selectionChanged", [selected_counties]);
 //$(handler).trigger("selectionChanged", [a,b,c,d,e]);
 //console.log(selected_counties);
-}));		
+}));}		
     
 
 }

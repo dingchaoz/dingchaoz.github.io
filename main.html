@@ -143,6 +143,10 @@ Filter by Age group:
         <input type="checkbox" name="gender" value="MALE" title="Male"  onchange="reactFunc()">Male
         <input type="checkbox" name="gender" value="FEMALE" title="Female" onchange="reactFunc()" checked="checked" > Female
       </label>
+	  <form action="">Mouse behave:
+       <input type="radio" name="mouse" value="tooltip" checked="checked" onchange="changemouse(this.value)">Tooltip
+       <input type="radio" name="mouse" value="brush" onchange="changemouse(this.value)">Brush
+       </form>
 
 	   <div id="header">
       <p>To explore United States population demographics changes from 2008 to 2013, use above interactive menu or brush window in the choropleth map.
@@ -196,6 +200,13 @@ Filter by Age group:
 			   prio_vis.change(input);
 
             }
+			
+			function changemouse(value) {
+			
+			//alert(value);
+			popmapall_vis.mouseBehav(value);
+			
+			}
 			
 			
 			 // trigger map change based in filter and selection inputs
