@@ -182,4 +182,11 @@ How do we pick a project that reflects this mindset? Here are some general guide
   Pick a dataset that is relatively clean, as a rule of thumb, if we have to spend more than week acquiring and cleaning the data, we may want to reconsider.
   
 ### Project Milestones
-1. Pick initial project ideas
+1. Pick initial project ideas. Use mentor as a soundingboard and filter.
+2. Write project proposal. A short blurb
+3. Data collection.
+4. Data wrangling.
+5. Exploratory data analysis.
+6. Modeling.
+7. Production.
+8. Deployment.
