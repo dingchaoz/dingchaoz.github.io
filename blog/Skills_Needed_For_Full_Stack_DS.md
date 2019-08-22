@@ -166,3 +166,20 @@ Highly recommend reading through Applied Predictive Modeling book.
 
 
 ### Stats: A/B testing
+
+
+## Projects
+###  Project Selection Guideline
+
+When we are working as a data scientist in industry, we are typically required to deliver solutions that are 'good enough' in a limited amount of time, unlike an academic research project, we may not have the luxury of time to find the best and optimal solution. It is very important to hava a sense of various tradeoffs between different approaches, and pick one that's well-suited to the problem and resources we have.
+
+How do we pick a project that reflects this mindset? Here are some general guidelines:
+- It it a real problme that someone would care about?
+  Ideally, the result our project could be sth you apply directly at work, and we can add it to your portfolio and brag about it.
+- Is there a real data available?
+  We want to work on a project that has real-world data, not a toy dataset or a data set that's used only for academic teaching purposes.
+- Is the data easy enough to acquire and clean?
+  Pick a dataset that is relatively clean, as a rule of thumb, if we have to spend more than week acquiring and cleaning the data, we may want to reconsider.
+  
+### Project Milestones
+1. Pick initial project ideas
