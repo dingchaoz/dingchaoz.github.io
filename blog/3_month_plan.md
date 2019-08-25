@@ -4,9 +4,7 @@ Adept at data wrangling and machine learning at scale
 A pro at working with neural networks
 A master at leveraging data science and ML engineering to create and deploy a complete AI system to production.
 
-we follow a project-based learning model to ensure that every skill you acquire maps to a deliverable in a real-world project. This means that the course curriculum is set up to help you successfully complete your mini-projects and capstone project, which closely mimics an end-to-end machine learning engineering project in a professional setting. 
-
-That said, the course, like the capstone project, is divided into two phases. The first phase of the capstone project focuses on building and scaling a working prototype, while the second phase focuses on deploying your prototype to production. Below is a roadmap of the different capstone deliverables you'll work on throughout the course. The multiple paths outlined in phase 1 are the different paths you can take based on the kind of capstone project you decide to work on. 
+## Month 1: Machine Learning Foundation
 
 ### Tech Refresher
 
@@ -74,6 +72,70 @@ you’ll approach this topic through practical, hands-on programming exercises a
 [Bayesian Statistics Explained](https://www.analyticsvidhya.com/blog/2016/06/bayesian-statistics-beginners-simple-english/)
 Bayesian statistics is one of those subjects that tends to remain elusive, even to the most knowledgeable of statisticians. This article, from Analytics Vidhya, explores this challenging topic and works to demystify it.
 
+### Hands-on Projects
+
+1. [Linear Regression Boston House Project](https://www.kaggle.com/fauzantaufik/boston-housepredict)
+The Boston Housing data set contains information about the housing values in suburbs of Boston. This data was originally a part of UCI Machine Learning Repository and has been removed now. We can also access this data from the scikit-learn library. There are 506 samples and 13 feature variables in this dataset. The objective is to predict the value of prices of the house using the given features.
+[Example Notebook1](https://towardsdatascience.com/linear-regression-on-boston-housing-dataset-f409b7e4a155)
+[Example Notebook2](https://medium.com/@haydar_ai/learning-data-science-day-9-linear-regression-on-boston-housing-dataset-cd62a80775ef)
+
+2. [Logistic Regression Heart Disease Prediction'](https://www.kaggle.com/ronitf/heart-disease-uci)
+This database contains 76 attributes, but all published experiments refer to using a subset of 14 of them. In particular, the Cleveland database is the only one that has been used by ML researchers to this date.
+[Example Notebook1](https://towardsdatascience.com/predicting-presence-of-heart-diseases-using-machine-learning-36f00f3edb2c)
+[Example Notebook2](https://www.kaggle.com/neisha/heart-disease-prediction-using-logistic-regression)
+
+3. [Clustering Techniques Customer Segmentation](http://blog.yhat.com/posts/customer-segmentation-using-python.html)
+The dataset contains wine offers that were e-mailed to the customers and data on which offers they purchased. Important features of wine offers include wine varietal, the minimum quantity, discount, country of origin and whether or not it is past peak. In this project, You will practice the use of K-Means and other clustering techniques to help with some of the exploratory aspects of customer segmentation.
+
+4. [Text Classficiation with Naive Bayes](https://github.com/cs109/2015lab10)
+In the mini-project, you'll learn the basics of text analysis using a subset of movie reviews from the rotten tomatoes database. You'll also use a fundamental technique in Bayesian inference, called Naive Bayes. 
+
+
+## Month2 Advanced Machine Learning & Deep Learning
+
+
+### Advanced ML
+[Decision Trees for Classification & Regression](https://www.youtube.com/embed/GZuweldJWrM?showinfo=0&rel=0&controls=1&autoplay=1) 
+
+[Random Forest](https://www.youtube.com/embed/3kYujfDgmNk?showinfo=0&rel=0&controls=1&autoplay=1)
+
+[Random Forests: Applications](https://www.youtube.com/embed/zFGPjRPwyFw?showinfo=0&rel=0&controls=1&autoplay=1)
+
+[Gradient Boosting & XGBoost](https://www.youtube.com/embed/fz1H03ZKvLM?showinfo=0&rel=0&controls=1&autoplay=1)
+
+[XGBoost in Practice](https://www.youtube.com/embed/s3VmuVPfu0s?showinfo=0&rel=0&controls=1&autoplay=1)
+
+[CatBoost: the New Generation of Gradient Boosting](https://www.youtube.com/embed/8o0e-r0B5xQ?showinfo=0&rel=0&controls=1&autoplay=1)
+
+[Practical Guide to Dimensionality Reduction Techniques](https://www.youtube.com/embed/ioXKxulmwVQ?showinfo=0&rel=0&controls=1&autoplay=1)
+
+
+[Feature Selection: Regularization](https://www.youtube.com/embed/d6XDOS4btck?showinfo=0&rel=0&controls=1&autoplay=1)
+
+[The Curse of Dimensionality](https://www.visiondummy.com/2014/04/curse-dimensionality-affect-classification/)
+
+[ Model Selection Through Cross-Validation](https://www.youtube.com/embed/o7zzaKd0Lkk?showinfo=0&rel=0&controls=1&autoplay=1)
+
+[Accuracy Metrics for Performance Evaluation](https://www.youtube.com/embed/xMyAL0C6cPY?showinfo=0&rel=0&controls=1&autoplay=1) 
+
+
+### Auto ML
+
+### Deep Learning
+NLP:
+   RNN/LSTM/Word Embedding/ Transfomer
+CV:
+   CNN/ Image Detection/ Segmenation/ 
+
+
+More to come 
+### Projects
+1 NLP, 1 CV, 1 advanced ML projects
+Placeholder
+
+
+
+## Month3 Scaling and Deployment
 
 ### Data Engineering
 [Spark vs Hadoop](https://www.datamation.com/data-center/hadoop-vs.-spark-the-new-age-of-big-data.html)
@@ -109,3 +171,6 @@ This subunit will cover the following topics:
 Ensuring that your code works on large datasets
 Reviewing profiling data for code performance
 Optimizing numerical code in Python
+
+### Projects:
+Placeholder
