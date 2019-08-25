@@ -1,8 +1,8 @@
 By the time you’re done with this program, you’ll be:
 
-Adept at data wrangling and machine learning at scale
-A pro at working with neural networks
-A master at leveraging data science and ML engineering to create and deploy a complete AI system to production.
+- Adept at data wrangling and machine learning at scale
+- A pro at working with machine learning and neural networks
+- A master at leveraging data science and ML engineering to create and deploy a complete AI system to production.
 
 ## Month 1: Machine Learning Foundation
 
