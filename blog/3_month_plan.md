@@ -120,7 +120,7 @@ In the mini-project, you'll learn the basics of text analysis using a subset of 
 
 
 ### Auto ML
-
+More to come, placeholder 
 ### Deep Learning
 NLP:
    RNN/LSTM/Word Embedding/ Transfomer
@@ -155,7 +155,8 @@ Please note that this demo [includes a code-along](https://github.com/docker-for
 [AWS Best Practices & Patterns](https://www.youtube.com/embed/a3713oGB6Zk?showinfo=0&rel=0&controls=1&autoplay=1)
 Cloud providers, like Microsoft Azure, Google Cloud, and Amazon Web Services (AWS), offer a host of useful services for the AI/ML practitioner, from simple data storage to hosting relational databases, and provide streaming data services, Big Data infrastructure, and even AI products, such as speech-to-text. In this talk, you’ll get an overview of the most important and widely used AWS services.  
 
-### Software Engineering TODO(https://www.springboard.com/workshops/ai-machine-learning-career-track/learn/107/#/curriculum/8104)
+### Software Engineering 
+More to come, Placeholder
 Over the years, software engineers have developed tried-and-true practices that are increasingly useful and relevant to other development fields, including AI, ML, and data science. In this subunit, you’ll dive into software engineering best practices in order to incorporate them into your work as an AI/ML engineer. You’ll learn about:
 
 CI/CD (Continuous Integration and Continuous Delivery)
@@ -164,7 +165,8 @@ Version control with Git
 
 Logging, testing, and debugging
 
-### Writing Faster Code TODO(https://www.springboard.com/workshops/ai-machine-learning-career-track/learn/107/#/curriculum/8119)
+### Writing Faster Code 
+More to come
 Writing Faster Code
 This subunit will cover the following topics:
 
@@ -173,4 +175,5 @@ Reviewing profiling data for code performance
 Optimizing numerical code in Python
 
 ### Projects:
+API, K8S/Docker deploy on ECS/EC2/EKS related
 Placeholder
