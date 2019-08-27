@@ -10,7 +10,7 @@ This BitBucket tutorial shows you how to collaborate on projects using Git, an i
 
 
 4. Docker 
-   - [Chatbot Docker Demo](https://github.com/dingchaozhang-tc/chatbot_docker)
+   - [Chatbot Docker Demo](https://github.com/dingchaoz/docker_learn)
    - [What is Docker?](https://opensource.com/resources/what-docker)
    - [Install Docker for Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
    - [Install Docker for Mac](https://docs.docker.com/docker-for-mac/install/)
