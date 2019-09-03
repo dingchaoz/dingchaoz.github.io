@@ -3,4 +3,5 @@
 
 
 
--[visual intro of numpy operations](https://jalammar.github.io/visual-numpy/)
+- [clean code python](https://github.com/zedr/clean-code-python#functions)
+- [visual intro of numpy operations](https://jalammar.github.io/visual-numpy/)
