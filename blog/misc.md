@@ -20,6 +20,7 @@
 - CV book spine recognition
 - [CV segment photos of bookshelves](https://jessicastringham.net/2018/12/01/books/)
 - [Spine-classifier](https://github.com/outkaj/spine-classifier)
+- [Shelfie](https://github.com/tphinkle/shelfie)
 
 
 - Recommendation System
