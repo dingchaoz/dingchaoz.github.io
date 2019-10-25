@@ -3,11 +3,11 @@ import time
 from datetime import datetime
 from os.path import abspath, dirname, join
 
-import picamera
 import cv2
 import numpy as np
 import requests
 
+import picamera
 from picamera import PiCamera
 # import the necessary packages
 from picamera.array import PiRGBArray
@@ -71,7 +71,8 @@ def send_info():
                "latitude": lat,
                "longitude": lon,
                "timeStamp": timestamp}
-    r = requests.post("http://foo.com/foo/bar", data=payload, headers=headers)
+    r = requests.post(
+        "https://wpqkrvfnm4.execute-api.us-east-1.amazonaws.com/hackathon/v1/create", data=payload, headers=headers)
     return
 
 
@@ -94,6 +95,8 @@ def pothole_detect(frame):
 for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
     rawCapture.truncate()
     rawCapture.seek(0)
+    if process(rawCapture):
+        break
     frame = f.array
     copy = frame.copy()
     blur = cv2.GaussianBlur(frame, (21, 21), 0)
@@ -124,7 +127,7 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
     # kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (7, 7))
     # omask = cv2.morphologyEx(1 - mask, cv2.MORPH_OPEN, kernel)
 
-    _ , contours, hierarchy = cv2.findContours(
+    _, contours, hierarchy = cv2.findContours(
         mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
 
     output = cv2.bitwise_and(frame, hsv, mask=mask)
@@ -145,7 +148,9 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
                     fontScale,
                     fontColor,
                     lineType)
-        # send_info()
+        if len(contours) > 20:
+            print('send alert to call center')
+            send_info()
         # playsound(VOICE_FILE)
 
     print(int(no_red))
