@@ -3,6 +3,7 @@ import time
 from datetime import datetime
 from os.path import abspath, dirname, join
 
+import picamera
 import cv2
 import numpy as np
 import requests
