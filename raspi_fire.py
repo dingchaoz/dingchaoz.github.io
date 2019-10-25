@@ -2,7 +2,7 @@ import random
 import time
 from datetime import datetime
 from os.path import abspath, dirname, join
-
+import json
 import cv2
 import numpy as np
 import requests
@@ -67,6 +67,7 @@ def send_info():
                "latitude": lat,
                "longitude": lon,
                "timestamp": timestamp}
+    payload = json.dumps(payload)
     r = requests.post(
         "https://wpqkrvfnm4.execute-api.us-east-1.amazonaws.com/hackathon/v1/create", data=payload, headers=headers)
     return
