@@ -94,8 +94,6 @@ def pothole_detect(frame):
 for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
     rawCapture.truncate()
     rawCapture.seek(0)
-    if process(rawCapture):
-        break
     frame = f.array
     copy = frame.copy()
     blur = cv2.GaussianBlur(frame, (21, 21), 0)
