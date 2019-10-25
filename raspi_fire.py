@@ -89,6 +89,8 @@ def pothole_detect(frame):
     # # resize image
     # resized = cv2.resize(frame, dim, interpolation=cv2.INTER_AREA)
 
+detection_count = 0
+
 for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
     rawCapture.truncate()
     rawCapture.seek(0)
@@ -143,10 +145,14 @@ for f in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True
                     fontScale,
                     fontColor,
                     lineType)
+        
         if len(contours) > 20:
-            print('send alert to call center')
+            detection_count += 1 
+
+        if detection_count > 20:
+            print('************** send alert to call center *******************')
             send_info()
-        # playsound(VOICE_FILE)
+            detection_count = 0
 
     print(int(no_red))
     cv2.imshow("output", copy)
